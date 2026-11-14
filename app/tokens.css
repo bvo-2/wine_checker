@@ -1,0 +1,65 @@
+/* Decant design tokens — Version 1 · Palette: Bordeaux. Never hard-code these values in product code. */
+:root {
+  /* Colour */
+  --primary: #8b1d3b;
+  --primary-active: #6e132c;
+  --primary-disabled: #e8cdd4;
+  --primary-soft: #f6e7eb;
+  --on-primary: #ffffff;
+  --accent: #8a5f1c;
+  --logo-claret: #7b153c;
+  --logo-cream: #fcead0;
+  --ink: #231a1c;
+  --body: #3d3335;
+  --muted: #6b6062;
+  --muted-soft: #9a8f8c;
+  --hairline: #e2dad6;
+  --hairline-soft: #eee8e5;
+  --border-strong: #8f8482;
+  --canvas: #ffffff;
+  --surface-soft: #f8f4f1;
+  --surface-card: #ffffff;
+  --surface-strong: #f1ebe7;
+  --star-rating: var(--ink);
+  --focus-ring: var(--ink);
+  --error: #b3261e;
+  --error-hover: #921c15;
+  --link-legal: #2a64c8;
+  --scrim: #00000080;
+  --wine-red: #7b1e34;
+  --wine-white: #e3cf73;
+  --wine-rose: #ef9aa0;
+  --wine-orange: #d0843a;
+  --wine-sparkling: #cfc49c;
+  --wine-dessert: #a8661a;
+
+  /* Type */
+  --font-display: Fraunces, "Iowan Old Style", Georgia, serif;
+  --font-text: "Crimson Text", Georgia, "Times New Roman", serif;
+
+  /* Spacing */
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-base: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --space-section: 64px;
+
+  /* Radius */
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Elevation */
+  --shadow-float: rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0;
+
+  /* Motion */
+  --motion: 180ms ease;
+}
