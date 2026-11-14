@@ -12,11 +12,7 @@ export function TopBar({ active }: { active: "cellar" | "search" | "add" }) {
     <header className="dc-topbar">
       <div className="dc-page dc-topbar__inner">
         <Link href="/" className="dc-brand" aria-label="Decant home">
-          <span className="dc-brand__tile" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M10 4h12c0 7-1 12-6 13-5-1-6-6-6-13zM16 17v9M11 28h10" />
-            </svg>
-          </span>
+          <img className="dc-brand__tile" src="/decant-logo.png" alt="" width={40} height={40} />
           Decant
         </Link>
         <nav className="dc-tabs" aria-label="Main">

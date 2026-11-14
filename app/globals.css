@@ -132,9 +132,7 @@ img {
   height: 40px;
   border-radius: var(--radius-md);
   background: var(--logo-claret);
-  color: var(--logo-cream);
-  display: grid;
-  place-items: center;
+  flex: none;
 }
 
 .dc-tabs {

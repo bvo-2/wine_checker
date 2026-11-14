@@ -40,6 +40,7 @@ app/
   search/           WineAPI search
   wines/[id]/       Wine detail and rating
   wines/new/        Add a wine by hand
+public/decant-logo.png  Logo (also app/icon.png, app/apple-icon.png)
 components/         TopBar, SearchBar, CategoryStrip, WineCard, Rating, RatingDisplay, Icon
 lib/
   db.ts             SQLite storage (wines, ratings)
