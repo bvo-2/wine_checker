@@ -1,0 +1,118 @@
+.hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.plate {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--size-hero-plate);
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-md);
+  background: var(--surface-strong);
+}
+
+.silhouette {
+  height: 78%;
+  width: auto;
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.layout {
+  display: grid;
+  /* About 64% / 32%, with the rating sticky on the right. */
+  grid-template-columns: minmax(0, 64fr) minmax(0, 32fr);
+  max-width: var(--size-detail-max);
+  gap: var(--space-xxl);
+  align-items: start;
+}
+
+.aside {
+  position: sticky;
+  top: calc(var(--size-topbar) + var(--space-lg));
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  min-width: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-base);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-spec-min), 1fr));
+  gap: var(--space-none) var(--space-lg);
+}
+
+.fact {
+  padding: var(--space-md) var(--space-none);
+  border-bottom: var(--border-thin) solid var(--hairline);
+}
+
+.factLabel {
+  color: var(--muted);
+  font: var(--type-caption);
+}
+
+.tastings {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-none);
+  list-style: none;
+}
+
+/* Reviews sit straight on canvas, separated by soft hairlines. */
+.tasting {
+  padding: var(--space-lg) var(--space-none);
+  border-bottom: var(--border-thin) solid var(--hairline-soft);
+}
+
+.tasting:first-child {
+  padding-top: var(--space-sm);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-base);
+}
+
+.manage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+@media (max-width: 743px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .aside {
+    position: static;
+    order: -1;
+  }
+}

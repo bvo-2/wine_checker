@@ -1,0 +1,100 @@
+.button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-height: var(--size-button);
+  padding: var(--space-none) var(--space-lg);
+  border-radius: var(--radius-sm);
+  border: var(--border-thin) solid transparent;
+  font: var(--type-button-md);
+  text-decoration: none;
+  cursor: pointer;
+  transition: box-shadow var(--motion);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+}
+
+.primary,
+.pill {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* Press swaps the fill; hover changes nothing (the design system allows no colour shift on hover). */
+.primary:active,
+.pill:active {
+  background: var(--primary-active);
+}
+
+.primary:disabled,
+.pill:disabled {
+  background: var(--primary-disabled);
+  color: var(--on-primary);
+}
+
+.pill {
+  border-radius: var(--radius-full);
+}
+
+.secondary {
+  background: var(--canvas);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.secondary:disabled {
+  color: var(--muted);
+  border-color: var(--hairline);
+  background: var(--surface-soft);
+}
+
+.tertiary {
+  min-height: var(--size-button-sm);
+  padding: var(--space-none) var(--space-xs);
+  background: none;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: var(--space-xs);
+}
+
+.tertiary:disabled {
+  color: var(--muted);
+}
+
+.danger {
+  background: var(--error);
+  color: var(--on-error);
+}
+
+.danger:active {
+  background: var(--error-hover);
+}
+
+.danger:disabled {
+  background: var(--surface-strong);
+  color: var(--muted);
+}
+
+.block {
+  display: flex;
+  width: 100%;
+}
+
+.spinner {
+  width: var(--space-base);
+  height: var(--space-base);
+  border-radius: var(--radius-full);
+  border: var(--border-thick) solid currentColor;
+  border-right-color: transparent;
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

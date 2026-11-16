@@ -1,13 +1,8 @@
 node_modules/
-.next/
-out/
-next-env.d.ts
+dist/
+playwright-report/
+test-results/
+coverage/
 *.tsbuildinfo
-# Local SQLite database
-*.db
-*.db-journal
-*.db-wal
-*.db-shm
-# Secrets
 .env
 .env*.local

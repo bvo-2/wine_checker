@@ -1,0 +1,20 @@
+{
+  "name": "Decant",
+  "short_name": "Decant",
+  "description": "Rate the wines you drink and keep a cellar of what you've tasted.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#7b153c",
+  "icons": [
+    { "src": "icons/decant-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/decant-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    {
+      "src": "icons/decant-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

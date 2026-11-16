@@ -1,0 +1,82 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  max-width: var(--size-form-max);
+  margin: var(--space-none) auto;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-base);
+  padding-top: var(--space-lg);
+  border-top: var(--border-thin) solid var(--hairline);
+}
+
+.file {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+.fileLabel {
+  color: var(--body);
+  font: var(--type-caption);
+}
+
+.fileInput {
+  width: 100%;
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  border: var(--border-thin) dashed var(--border-strong);
+  background: var(--surface-soft);
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-base);
+  width: 100%;
+  padding: var(--space-base);
+  border-radius: var(--radius-sm);
+  border: var(--border-thin) solid var(--hairline);
+  background: var(--surface-soft);
+}
+
+.modes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-none);
+  margin: var(--space-none);
+  border: none;
+}
+
+.mode {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  cursor: pointer;
+}
+
+.mode input {
+  flex: none;
+  width: var(--space-lg);
+  height: var(--space-lg);
+  margin: var(--space-none);
+  accent-color: var(--ink);
+}
+
+.success {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-base);
+  border-radius: var(--radius-sm);
+  border: var(--border-thin) solid var(--hairline);
+  background: var(--surface-soft);
+}

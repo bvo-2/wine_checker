@@ -1,0 +1,174 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.skip {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  z-index: var(--layer-overlay);
+  padding: var(--space-sm) var(--space-base);
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: var(--canvas);
+  transform: translateY(-200%);
+}
+
+.skip:focus {
+  transform: none;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--layer-topbar);
+  background: var(--canvas);
+  border-bottom: var(--border-thin) solid var(--hairline);
+}
+
+.topbarInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  max-width: var(--size-page-max);
+  height: var(--size-topbar);
+  margin: var(--space-none) auto;
+  padding: var(--space-none) var(--space-lg);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  text-decoration: none;
+  /* The name beside the logo: the display family at weight 600. */
+  font: var(--type-display-md);
+  letter-spacing: var(--tracking-display-xl);
+}
+
+.logo {
+  width: var(--size-logo);
+  height: var(--size-logo);
+  /* The logo is shown as a whole square tile with radius-md corners. */
+  border-radius: var(--radius-md);
+  flex: none;
+}
+
+.tabs {
+  display: flex;
+  align-self: stretch;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.actions .narrowOnly {
+  display: none;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--size-page-max);
+  margin: var(--space-none) auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-section);
+}
+
+.main:focus {
+  outline: none;
+}
+
+.footer {
+  padding: var(--space-xxl) var(--space-lg);
+  border-top: var(--border-thin) solid var(--hairline);
+  background: var(--surface-soft);
+  color: var(--muted);
+  text-align: center;
+}
+
+.reminder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-base);
+  padding: var(--space-sm) var(--space-base);
+  background: var(--surface-soft);
+  border-bottom: var(--border-thin) solid var(--hairline);
+  color: var(--body);
+  text-align: center;
+}
+
+.reminderActions {
+  display: flex;
+  gap: var(--space-base);
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--size-input);
+  border-bottom: var(--border-thin) solid var(--hairline-soft);
+  text-decoration: none;
+  font: var(--type-nav-link);
+  color: var(--muted);
+}
+
+.menuLink[aria-current='page'] {
+  color: var(--ink);
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-base);
+  max-width: var(--size-form-max);
+  margin: var(--space-none) auto;
+  padding: var(--space-section) var(--space-lg);
+  text-align: center;
+}
+
+/* Tablet: the five tabs need the room, so "Add a wine" becomes an icon. */
+@media (max-width: 1127px) {
+  .actions .wideOnly {
+    display: none;
+  }
+
+  .actions .narrowOnly {
+    display: inline-grid;
+  }
+
+  .tabs nav {
+    gap: var(--space-lg);
+  }
+}
+
+/* Mobile: the product tabs move into the menu sheet. */
+@media (max-width: 743px) {
+  .topbarInner {
+    height: var(--size-topbar-compact);
+    padding: var(--space-none) var(--space-base);
+    gap: var(--space-md);
+  }
+
+  .tabs {
+    display: none;
+  }
+
+  .main {
+    padding: var(--space-lg) var(--space-base) var(--space-xxl);
+  }
+}

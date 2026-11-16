@@ -1,0 +1,40 @@
+.tabs {
+  display: flex;
+  align-self: stretch;
+  gap: var(--space-xl);
+}
+
+.tab {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: var(--space-sm);
+  padding: var(--space-none);
+  background: none;
+  border: none;
+  /* The underline is the only hard edge in the interface. */
+  border-radius: var(--radius-none);
+  border-top: var(--border-thick) solid transparent;
+  border-bottom: var(--border-thick) solid transparent;
+  color: var(--muted);
+  font: var(--type-nav-link);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tab[aria-current='page'] {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.tab:focus-visible {
+  outline-offset: calc(-1 * var(--border-thick));
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: var(--space-xl);
+  height: var(--space-xl);
+}

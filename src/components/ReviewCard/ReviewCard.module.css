@@ -1,0 +1,62 @@
+.review {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  min-width: 0;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--size-avatar);
+  height: var(--size-avatar);
+  border-radius: var(--radius-full);
+  background: var(--surface-strong);
+  color: var(--ink);
+  font: var(--type-caption);
+  object-fit: cover;
+}
+
+.who {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.name {
+  font: var(--type-title-md);
+}
+
+.date {
+  color: var(--muted);
+  font: var(--type-body-sm);
+}
+
+.note {
+  color: var(--body);
+  font: var(--type-body-md);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.clamped {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-base);
+}
