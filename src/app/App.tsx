@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppShell } from './AppShell';
 import { AddWinePage } from '../pages/AddWinePage';
+import { BackupPage } from '../pages/BackupPage';
 import { CellarPage } from '../pages/CellarPage';
-import { ComingSoonPage } from '../pages/ComingSoonPage';
 import { EditWinePage } from '../pages/EditWinePage';
 import { GroupListPage } from '../pages/GroupListPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
@@ -24,7 +24,7 @@ export function App() {
         <Route path="regions" element={<GroupListPage field="region" />} />
         <Route path="countries" element={<GroupListPage field="country" />} />
         <Route path="tastings" element={<TastingsPage />} />
-        <Route path="backup" element={<ComingSoonPage title="Backup and restore" />} />
+        <Route path="backup" element={<BackupPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

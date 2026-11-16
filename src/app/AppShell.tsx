@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { BackupReminder } from './BackupReminder';
 import { ErrorBoundary } from './ErrorBoundary';
 import { TopBar } from './TopBar';
 import styles from './AppShell.module.css';
@@ -17,6 +18,7 @@ export function AppShell() {
         Skip to content
       </a>
       <TopBar />
+      <BackupReminder />
       <main id="main" tabIndex={-1} className={styles.main}>
         {/* Keyed by path so a crash on one screen clears when navigating away. */}
         <ErrorBoundary key={pathname}>

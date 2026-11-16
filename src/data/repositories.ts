@@ -1,4 +1,11 @@
 import { liveQuery } from 'dexie';
+import {
+  buildBackup,
+  planImport,
+  type BackupData,
+  type ImportMode,
+  type ImportPlan,
+} from '../domain/backup';
 import type { Rating, RatingInput, Wine, WineInput } from '../domain/types';
 import type { DecantDb } from './db';
 
@@ -26,9 +33,27 @@ export interface RatingRepository {
   remove(id: string): Promise<void>;
 }
 
+export interface BackupRepository {
+  /** Everything stored, as a backup file's content. */
+  exportAll(): Promise<BackupData>;
+  /** What importing would do, without changing anything. */
+  preview(backup: BackupData, mode: ImportMode): Promise<ImportPlan>;
+  /** Applies an import in one transaction: all of it or none of it. */
+  importAll(backup: BackupData, mode: ImportMode): Promise<ImportPlan>;
+}
+
+/** Small settings that are not wines or tastings. */
+export interface MetaRepository {
+  get(key: MetaKey): Promise<string | undefined>;
+  set(key: MetaKey, value: string): Promise<void>;
+}
+export type MetaKey = 'lastExportAt';
+
 export interface Repositories {
   wines: WineRepository;
   ratings: RatingRepository;
+  backup: BackupRepository;
+  meta: MetaRepository;
   /**
    * Runs `query` now and again whenever the data it read changes.
    * Returns a function that stops watching.
@@ -146,9 +171,44 @@ export function createRepositories(
     remove: (id) => db.ratings.delete(id),
   };
 
+  const backup: BackupRepository = {
+    async exportAll() {
+      const [allWines, allRatings] = await db.transaction('r', db.wines, db.ratings, () =>
+        Promise.all([db.wines.toArray(), db.ratings.toArray()]),
+      );
+      return buildBackup(allWines, allRatings, new Date(now()));
+    },
+    async preview(data, mode) {
+      const [allWines, allRatings] = await Promise.all([db.wines.toArray(), db.ratings.toArray()]);
+      return planImport(data, { wines: allWines, ratings: allRatings }, mode);
+    },
+    importAll(data, mode) {
+      return db.transaction('rw', db.wines, db.ratings, async () => {
+        const current = { wines: await db.wines.toArray(), ratings: await db.ratings.toArray() };
+        const plan = planImport(data, current, mode);
+        if (mode === 'replace') {
+          await db.ratings.clear();
+          await db.wines.clear();
+        }
+        await db.wines.bulkPut(plan.wines);
+        await db.ratings.bulkPut(plan.ratings);
+        return plan;
+      });
+    },
+  };
+
+  const meta: MetaRepository = {
+    get: async (key) => (await db.meta.get(key))?.value,
+    set: async (key, value) => {
+      await db.meta.put({ key, value });
+    },
+  };
+
   return {
     wines,
     ratings,
+    backup,
+    meta,
     watch(query, onValue, onError) {
       const subscription = liveQuery(query).subscribe({ next: onValue, error: onError });
       return () => subscription.unsubscribe();

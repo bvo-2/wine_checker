@@ -22,6 +22,7 @@ createServer(async (req, res) => {
     return;
   }
   const rel = normalize(path.slice(PREFIX.length) || 'index.html');
+  // A service worker script must be served as JavaScript.
   if (rel.startsWith('..')) {
     res.writeHead(400).end();
     return;

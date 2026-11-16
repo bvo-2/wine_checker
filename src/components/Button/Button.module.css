@@ -11,9 +11,7 @@
   font: var(--type-title-md);
   text-decoration: none;
   cursor: pointer;
-  transition:
-    background-color var(--motion),
-    box-shadow var(--motion);
+  transition: box-shadow var(--motion);
 }
 
 .button:disabled {
