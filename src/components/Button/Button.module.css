@@ -8,7 +8,7 @@
   padding: var(--space-none) var(--space-lg);
   border-radius: var(--radius-sm);
   border: var(--border-thin) solid transparent;
-  font: var(--type-title-md);
+  font: var(--type-button-md);
   text-decoration: none;
   cursor: pointer;
   transition: box-shadow var(--motion);
@@ -18,29 +18,32 @@
   cursor: not-allowed;
 }
 
-.primary {
+.primary,
+.pill {
   background: var(--primary);
   color: var(--on-primary);
 }
 
-.primary:hover,
-.primary:active {
+/* Press swaps the fill; hover changes nothing (the design system allows no colour shift on hover). */
+.primary:active,
+.pill:active {
   background: var(--primary-active);
 }
 
-.primary:disabled {
+.primary:disabled,
+.pill:disabled {
   background: var(--primary-disabled);
-  color: var(--primary-active);
+  color: var(--on-primary);
+}
+
+.pill {
+  border-radius: var(--radius-full);
 }
 
 .secondary {
   background: var(--canvas);
   color: var(--ink);
   border-color: var(--ink);
-}
-
-.secondary:hover {
-  background: var(--surface-soft);
 }
 
 .secondary:disabled {
@@ -67,7 +70,6 @@
   color: var(--on-error);
 }
 
-.danger:hover,
 .danger:active {
   background: var(--error-hover);
 }

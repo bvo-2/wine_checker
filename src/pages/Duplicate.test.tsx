@@ -21,7 +21,7 @@ async function fillDuplicate() {
   await userEvent.type(screen.getByLabelText('Wine name'), '  barolo ');
   await userEvent.type(screen.getByLabelText(/Producer/), 'CONTERNO');
   await userEvent.type(screen.getByLabelText(/Vintage/), '2015');
-  await userEvent.click(screen.getByRole('radio', { name: '3 stars' }));
+  await userEvent.click(screen.getByRole('button', { name: '3 stars' }));
   await userEvent.click(screen.getByRole('button', { name: 'Save to my cellar' }));
 }
 
@@ -75,7 +75,7 @@ describe('duplicate suggestion', () => {
     await userEvent.type(screen.getByLabelText('Wine name'), 'Barolo');
     await userEvent.type(screen.getByLabelText(/Producer/), 'Conterno');
     await userEvent.type(screen.getByLabelText(/Vintage/), '2016');
-    await userEvent.click(screen.getByRole('radio', { name: '3 stars' }));
+    await userEvent.click(screen.getByRole('button', { name: '3 stars' }));
     await userEvent.click(screen.getByRole('button', { name: 'Save to my cellar' }));
     expect(await screen.findByRole('heading', { level: 1, name: 'My cellar' })).toBeInTheDocument();
   });

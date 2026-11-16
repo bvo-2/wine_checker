@@ -29,9 +29,11 @@ export function RatingFields({ values, errors, onChange, show = 'all' }: RatingF
       {main && (
         <>
           <div className={styles.wide}>
+            <span className={styles.caption} aria-hidden="true">
+              Your rating
+            </span>
             <Rating
               label="Your rating"
-              name="stars"
               value={values.stars}
               onChange={(stars) => onChange({ ...values, stars })}
               error={errors.stars}

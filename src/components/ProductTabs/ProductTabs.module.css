@@ -4,29 +4,23 @@
   gap: var(--space-xl);
 }
 
-.compact {
-  gap: var(--space-lg);
-  height: var(--size-tabs-compact);
-  padding: var(--space-none) var(--space-base);
-  overflow-x: auto;
-  scrollbar-width: none;
-  border-bottom: var(--border-thin) solid var(--hairline);
-}
-
 .tab {
+  appearance: none;
   display: flex;
   align-items: center;
   flex: none;
-  text-decoration: none;
-  font: var(--type-title-md);
-  color: var(--muted);
+  gap: var(--space-sm);
+  padding: var(--space-none);
+  background: none;
+  border: none;
+  /* The underline is the only hard edge in the interface. */
+  border-radius: var(--radius-none);
   border-top: var(--border-thick) solid transparent;
   border-bottom: var(--border-thick) solid transparent;
-  transition: color var(--motion);
-}
-
-.tab:hover {
-  color: var(--ink);
+  color: var(--muted);
+  font: var(--type-nav-link);
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .tab[aria-current='page'] {
@@ -36,4 +30,11 @@
 
 .tab:focus-visible {
   outline-offset: calc(-1 * var(--border-thick));
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: var(--space-xl);
+  height: var(--space-xl);
 }

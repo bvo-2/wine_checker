@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import {
   expectNoSeriousA11yIssues,
+  openTab,
   SAMPLE_RATINGS,
   SAMPLE_WINES,
   seed,
@@ -11,11 +12,10 @@ test.describe('browse by winery, region, country and tastings', () => {
   test('every tab shows grouped data and opens a filtered cellar view', async ({ page }) => {
     const messages = trackConsole(page);
     await seed(page, SAMPLE_WINES, SAMPLE_RATINGS);
-    const tabs = page.getByRole('navigation', { name: 'Sections' }).filter({ visible: true });
     const main = page.getByRole('main');
 
     // Wineries
-    await tabs.getByRole('link', { name: 'Wineries', exact: true }).click();
+    await openTab(page, 'Wineries');
     await expect(page.getByRole('heading', { level: 1, name: 'Wineries' })).toBeVisible();
     await expect(main.getByRole('listitem')).toHaveText([
       /Giacomo Conterno1 wine · 2 tastings.*4\.5/,
@@ -35,7 +35,7 @@ test.describe('browse by winery, region, country and tastings', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'Wineries' })).toBeVisible();
 
     // Regions
-    await tabs.getByRole('link', { name: 'Regions', exact: true }).click();
+    await openTab(page, 'Regions');
     await expect(main.getByRole('listitem')).toHaveText([
       /Burgundy/,
       /Piedmont/,
@@ -48,7 +48,7 @@ test.describe('browse by winery, region, country and tastings', () => {
     await expect(main.getByRole('heading', { level: 3 })).toHaveText(['House red']);
 
     // Countries
-    await tabs.getByRole('link', { name: 'Countries', exact: true }).click();
+    await openTab(page, 'Countries');
     await expect(main.getByRole('listitem')).toHaveText([/France/, /Italy/, /Spain/, /Unknown/]);
     await expectNoSeriousA11yIssues(page);
     await main.getByRole('link', { name: /France/ }).click();
@@ -56,7 +56,7 @@ test.describe('browse by winery, region, country and tastings', () => {
     await expect(main.getByRole('heading', { level: 3 })).toHaveText(['Chablis Les Clos']);
 
     // Tastings
-    await tabs.getByRole('link', { name: 'Tastings', exact: true }).click();
+    await openTab(page, 'Tastings');
     await expect(page.getByRole('heading', { level: 1, name: 'Tastings' })).toBeVisible();
     await expect(main.getByRole('heading', { level: 2 })).toHaveText([
       'June 2025',
@@ -66,7 +66,8 @@ test.describe('browse by winery, region, country and tastings', () => {
     ]);
     await expect(
       page.getByRole('region', { name: 'June 2025' }).getByRole('heading', { level: 3 }),
-    ).toHaveText(['10 June 2025', '1 June 2025']);
+    ).toHaveText(['Chablis Les Clos 2019', 'House red']);
+    await expect(page.getByRole('region', { name: 'June 2025' })).toContainText('10 June 2025');
     await expectNoSeriousA11yIssues(page);
     await page.getByRole('region', { name: 'March 2025' }).getByRole('link').click();
     await expect(page.getByRole('heading', { level: 1, name: 'Barolo Monfortino' })).toBeVisible();

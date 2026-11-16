@@ -8,7 +8,7 @@ describe('Add a wine', () => {
   it('saves with only a name and stars, then shows the wine in the cellar', async () => {
     const { repos } = renderApp('/wines/new');
     await userEvent.type(screen.getByLabelText('Wine name'), 'Barolo');
-    await userEvent.click(screen.getByRole('radio', { name: '4 stars' }));
+    await userEvent.click(screen.getByRole('button', { name: '4 stars' }));
     await userEvent.click(screen.getByRole('button', { name: 'Save to my cellar' }));
 
     expect(await screen.findByRole('heading', { level: 1, name: 'My cellar' })).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('Add a wine', () => {
     await userEvent.type(screen.getByLabelText(/Region/), 'Piedmont');
     await userEvent.type(screen.getByLabelText(/Alcohol/), '14.5');
     await userEvent.type(screen.getByLabelText(/Grapes/), 'Nebbiolo');
-    await userEvent.click(screen.getByRole('radio', { name: '5 stars' }));
+    await userEvent.click(screen.getByRole('button', { name: '5 stars' }));
     await userEvent.type(screen.getByLabelText(/Tasting note/), 'Roses and tar.');
     await userEvent.type(screen.getByLabelText(/Place/), 'At home');
     await userEvent.type(screen.getByLabelText(/Price paid/), '120');
@@ -63,9 +63,9 @@ describe('Add a wine', () => {
     const name = screen.getByLabelText('Wine name');
     expect(name).toHaveAttribute('aria-invalid', 'true');
     expect(name).toHaveAccessibleDescription('Enter the name of the wine');
-    expect(screen.getByRole('radiogroup')).toHaveAccessibleDescription(
-      'Choose a rating from 1 to 5 stars',
-    );
+    expect(
+      screen.getByRole('group', { name: 'Your rating, required' }),
+    ).toHaveAccessibleDescription('Choose a rating from 1 to 5 stars');
     await waitFor(() => expect(name).toHaveFocus());
     expect(await repos.wines.list()).toEqual([]);
   });
@@ -76,7 +76,7 @@ describe('Add a wine', () => {
     await userEvent.type(screen.getByLabelText(/Vintage/), '1492');
     await userEvent.type(screen.getByLabelText(/Alcohol/), '80');
     await userEvent.type(screen.getByLabelText(/Price paid/), 'cheap');
-    await userEvent.click(screen.getByRole('radio', { name: '3 stars' }));
+    await userEvent.click(screen.getByRole('button', { name: '3 stars' }));
     await userEvent.click(screen.getByRole('button', { name: 'Save to my cellar' }));
 
     expect(screen.getByLabelText(/Vintage/)).toHaveAccessibleDescription(/Enter a year from 1800/);
@@ -91,7 +91,7 @@ describe('Add a wine', () => {
     renderApp('/wines/new');
     await userEvent.click(screen.getByRole('button', { name: 'Save to my cellar' }));
     await userEvent.type(screen.getByLabelText('Wine name'), 'Barolo');
-    await userEvent.click(screen.getByRole('radio', { name: '2 stars' }));
+    await userEvent.click(screen.getByRole('button', { name: '2 stars' }));
     await userEvent.click(screen.getByRole('button', { name: 'Save to my cellar' }));
     expect(await screen.findByRole('heading', { level: 1, name: 'My cellar' })).toBeInTheDocument();
   });
@@ -101,7 +101,7 @@ describe('Add a wine', () => {
     const { repos } = renderApp('/wines/new');
     vi.spyOn(repos.wines, 'createWithRating').mockRejectedValue(new Error('QuotaExceededError'));
     await userEvent.type(screen.getByLabelText('Wine name'), 'Barolo');
-    await userEvent.click(screen.getByRole('radio', { name: '4 stars' }));
+    await userEvent.click(screen.getByRole('button', { name: '4 stars' }));
     await userEvent.click(screen.getByRole('button', { name: 'Save to my cellar' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('Could not save');
     expect(screen.getByLabelText('Wine name')).toHaveValue('Barolo');

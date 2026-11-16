@@ -79,17 +79,18 @@ textarea {
 /* ---------- Type styles ---------- */
 .t-display-xl {
   font: var(--type-display-xl);
-  letter-spacing: var(--tracking-display);
+  letter-spacing: var(--tracking-display-xl);
 }
 .t-display-lg {
   font: var(--type-display-lg);
-  letter-spacing: var(--tracking-display);
+  letter-spacing: var(--tracking-display-lg);
 }
 .t-display-md {
   font: var(--type-display-md);
 }
 .t-display-sm {
   font: var(--type-display-sm);
+  letter-spacing: var(--tracking-display-sm);
 }
 .t-title-md {
   font: var(--type-title-md);

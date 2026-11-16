@@ -54,4 +54,6 @@
   width: 100%;
   max-width: var(--size-sheet-max);
   height: 100dvh;
+  border-top-left-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-lg);
 }

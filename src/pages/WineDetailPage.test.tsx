@@ -67,7 +67,7 @@ describe('Wine detail', () => {
     expect(
       await screen.findByRole('heading', { level: 1, name: 'Add a tasting' }),
     ).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('radio', { name: '3 stars' }));
+    await userEvent.click(screen.getByRole('button', { name: '3 stars' }));
     await userEvent.click(screen.getByRole('button', { name: 'Save tasting' }));
     expect(await screen.findByText('Average of 3 tastings')).toBeInTheDocument();
     expect(screen.getByText('4.0', { selector: 'p' })).toBeInTheDocument();
@@ -80,10 +80,10 @@ describe('Wine detail', () => {
     );
     const note = await screen.findByLabelText(/Tasting note/);
     expect(note).toHaveValue('Superb');
-    expect(screen.getByRole('radio', { name: '5 stars' })).toBeChecked();
+    expect(screen.getByRole('button', { name: '5 stars' })).toHaveAttribute('aria-pressed', 'true');
     await userEvent.clear(note);
     await userEvent.type(note, 'Even better on day two');
-    await userEvent.click(screen.getByRole('radio', { name: '4 stars' }));
+    await userEvent.click(screen.getByRole('button', { name: '4 stars' }));
     await userEvent.click(screen.getByRole('button', { name: 'Save changes' }));
     // selector: the note on the detail page, not the textarea still on screen while saving.
     expect(
@@ -128,7 +128,7 @@ describe('Wine detail', () => {
     expect(
       await screen.findByText('No tastings yet. Add one to rate this wine.'),
     ).toBeInTheDocument();
-    expect(screen.getByLabelText('Not rated yet')).toBeInTheDocument();
+    expect(screen.getByText('Not rated yet')).toBeInTheDocument();
   });
 
   it('edits the wine', async () => {

@@ -8,11 +8,17 @@ export interface BadgeProps {
   tone?: BadgeTone;
   /** Adds the floating shadow, for badges placed over a card image. */
   floating?: boolean;
-  children: ReactNode;
+  children?: ReactNode;
+  className?: string;
 }
 
-export function Badge({ tone = 'neutral', floating = false, children }: BadgeProps) {
-  const className = [styles.badge, styles[tone], floating && styles.floating]
+export function Badge({
+  tone = 'neutral',
+  floating = false,
+  children,
+  className: extra,
+}: BadgeProps) {
+  const className = [styles.badge, styles[tone], floating && styles.floating, extra]
     .filter(Boolean)
     .join(' ');
   return <span className={className}>{children}</span>;

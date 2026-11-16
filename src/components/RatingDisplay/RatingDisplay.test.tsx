@@ -15,13 +15,6 @@ describe('RatingDisplay', () => {
     expect(screen.getByText('5.0')).toBeInTheDocument();
   });
 
-  it('shows an empty state instead of 0.0 when there is no score', () => {
-    render(<RatingDisplay label="No tastings yet" />);
-    expect(screen.getByLabelText('Not rated yet')).toBeInTheDocument();
-    expect(screen.queryByRole('img')).not.toBeInTheDocument();
-    expect(screen.queryByText('0.0')).not.toBeInTheDocument();
-  });
-
   it('shows at most three stats as term and value pairs', () => {
     render(
       <RatingDisplay

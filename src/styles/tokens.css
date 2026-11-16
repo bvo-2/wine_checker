@@ -28,7 +28,9 @@
   --focus-ring: var(--ink);
   --error: #b3261e;
   --error-hover: #921c15;
+  /* App extension (not in the design system): text on an error fill, for the destructive confirm button. */
   --on-error: #ffffff;
+  --link-legal: #2a64c8;
   --scrim: #00000080;
   --wine-red: #7b1e34;
   --wine-white: #e3cf73;
@@ -49,14 +51,23 @@
   --type-display-md: 600 21px/1.33 var(--font-display);
   --type-display-sm: 500 20px/1.2 var(--font-display);
   --type-title-md: 600 16px/1.25 var(--font-text);
+  --type-title-sm: 400 16px/1.25 var(--font-text);
+  --type-nav-link: 600 16px/1.25 var(--font-text);
   --type-body-md: 400 16px/1.5 var(--font-text);
   --type-body-sm: 400 14px/1.43 var(--font-text);
   --type-caption: 600 14px/1.29 var(--font-text);
   --type-caption-sm: 400 13px/1.23 var(--font-text);
   --type-micro-label: 700 12px/1.33 var(--font-text);
   --type-badge: 600 11px/1.18 var(--font-text);
-  --tracking-display: -0.2px;
+  --type-uppercase-tag: 700 10px/1.2 var(--font-text);
+  --type-button-md: 600 16px/1.25 var(--font-text);
+  --type-button-sm: 600 14px/1.29 var(--font-text);
+  --type-link: 400 14px/1.43 var(--font-text);
   --tracking-rating-display: -1px;
+  --tracking-display-xl: -0.2px;
+  --tracking-display-lg: -0.44px;
+  --tracking-display-sm: -0.18px;
+  --tracking-uppercase-tag: 0.4px;
 
   /* Spacing */
   --space-none: 0px;
@@ -89,17 +100,16 @@
   --size-form-max: 640px;
   --size-topbar: 80px;
   --size-topbar-compact: 64px;
-  --size-tabs-compact: 48px;
   --size-logo: 48px;
   --size-button: 48px;
   --size-button-sm: 40px;
   --size-input: 56px;
   --size-textarea-min: 112px;
-  --size-icon-button: 44px;
-  --size-icon-button-sm: 32px;
+  --size-icon-button: 32px;
+  --size-icon-button-lg: 40px;
+  --size-avatar: 40px;
   --size-chip: 40px;
   --size-dot: 10px;
-  --size-star-touch: 44px;
   --size-sheet-max: 420px;
   --size-dialog-max: 440px;
   --size-card-min: 220px;
@@ -117,11 +127,4 @@
   /* Layers */
   --layer-topbar: 10;
   --layer-overlay: 100;
-}
-
-@media (max-width: 743px) {
-  :root {
-    --type-rating-display: 600 56px/1.1 var(--font-display);
-    --type-display-xl: 600 24px/1.29 var(--font-display);
-  }
 }

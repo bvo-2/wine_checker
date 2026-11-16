@@ -22,6 +22,13 @@
   grid-column: 1 / -1;
 }
 
+.caption {
+  display: block;
+  margin-bottom: var(--space-xs);
+  color: var(--muted);
+  font: var(--type-caption);
+}
+
 .more {
   border-top: var(--border-thin) solid var(--hairline);
   border-bottom: var(--border-thin) solid var(--hairline);

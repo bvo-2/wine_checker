@@ -3,11 +3,12 @@ import { Link, type LinkProps } from 'react-router-dom';
 import { Icon, type IconName } from '../Icon/Icon';
 import styles from './IconButton.module.css';
 
-export type IconButtonVariant = 'filled' | 'outline' | 'ghost';
+/** circle: 32px on a surface-strong fill. outline: 40px with a ring. ghost: no fill, for dense rows. */
+export type IconButtonVariant = 'circle' | 'outline' | 'ghost';
 
 interface CommonProps {
   icon: IconName;
-  /** Accessible name. Required: the button has no visible text. */
+  /** Accessible name (becomes aria-label). Required: the button has no visible text. */
   label: string;
   variant?: IconButtonVariant;
 }
@@ -22,14 +23,14 @@ function classes(variant: IconButtonVariant, extra?: string) {
 export function IconButton({
   icon,
   label,
-  variant = 'ghost',
+  variant = 'circle',
   type = 'button',
   className,
   ...rest
 }: IconButtonProps) {
   return (
     <button {...rest} type={type} aria-label={label} className={classes(variant, className)}>
-      <Icon name={icon} size={20} />
+      <Icon name={icon} size={variant === 'circle' ? 16 : 20} />
     </button>
   );
 }
@@ -41,13 +42,13 @@ export interface IconButtonLinkProps
 export function IconButtonLink({
   icon,
   label,
-  variant = 'ghost',
+  variant = 'circle',
   className,
   ...rest
 }: IconButtonLinkProps) {
   return (
     <Link {...rest} aria-label={label} className={classes(variant, className)}>
-      <Icon name={icon} size={20} />
+      <Icon name={icon} size={variant === 'circle' ? 16 : 20} />
     </Link>
   );
 }

@@ -1,45 +1,55 @@
+import { WINE_TYPES, WINE_TYPE_LABELS, type WineType } from '../../domain/types';
 import styles from './CategoryStrip.module.css';
 
-export interface Category<Id extends string = string> {
-  id: Id;
+export interface CategoryItem {
+  id: string;
   label: string;
-  /** Optional colour dot: the name of a wine type token, e.g. "red" → --wine-red. */
-  dot?: string;
+  /** Shows this wine type's colour dot beside the label. */
+  wine?: WineType;
 }
 
-export interface CategoryStripProps<Id extends string = string> {
-  /** Accessible name of the group, e.g. "Filter by wine type". */
-  label: string;
-  categories: readonly Category<Id>[];
-  /** The selected category, if any. One at most. */
-  active?: Id;
-  /** Called with the chosen id, or undefined when the active chip is pressed again. */
-  onChange: (id: Id | undefined) => void;
+/** The default items: the six wine types, each with its colour dot. */
+export const WINE_TYPE_ITEMS: readonly CategoryItem[] = WINE_TYPES.map((type) => ({
+  id: type,
+  label: WINE_TYPE_LABELS[type],
+  wine: type,
+}));
+
+export interface CategoryStripProps {
+  /** Defaults to the six wine types. */
+  items?: readonly CategoryItem[];
+  /** The pressed chip, if any. One at a time. */
+  active?: string | null;
+  /** Called with the chosen id, or null when the pressed chip is pressed again. */
+  onChange?: (id: string | null) => void;
+  /** Accessible name of the group. */
+  label?: string;
 }
 
-/** A scrolling row of filter chips. Pressing the active chip clears the filter. */
-export function CategoryStrip<Id extends string = string>({
-  label,
-  categories,
-  active,
+/**
+ * A horizontally scrolling row of filter chips. The dot always sits beside a text
+ * label: colour alone never identifies a type.
+ */
+export function CategoryStrip({
+  items = WINE_TYPE_ITEMS,
+  active = null,
   onChange,
-}: CategoryStripProps<Id>) {
+  label = 'Filter by wine type',
+}: CategoryStripProps) {
   return (
     <div role="group" aria-label={label} className={styles.strip}>
-      {categories.map((category) => {
-        const on = category.id === active;
+      {items.map((item) => {
+        const on = item.id === active;
         return (
           <button
-            key={category.id}
+            key={item.id}
             type="button"
             className={styles.chip}
             aria-pressed={on}
-            onClick={() => onChange(on ? undefined : category.id)}
+            onClick={() => onChange?.(on ? null : item.id)}
           >
-            {category.dot && (
-              <span className={styles.dot} data-type={category.dot} aria-hidden="true" />
-            )}
-            {category.label}
+            {item.wine && <span className={styles.dot} data-type={item.wine} aria-hidden="true" />}
+            {item.label}
           </button>
         );
       })}

@@ -2,10 +2,14 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Link, type LinkProps } from 'react-router-dom';
 import styles from './Button.module.css';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'danger';
+/** 'danger' is an app extension for confirming a deletion; the rest are the design system's. */
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'pill' | 'danger';
 
 interface CommonProps {
-  /** primary: the one main action on a screen. secondary: other actions. tertiary: text link. danger: destructive. */
+  /**
+   * primary: the one main action of a view. secondary: the other choice beside it.
+   * tertiary: plain underlined text. pill: a rounded primary for promos, not for forms.
+   */
   variant?: ButtonVariant;
   /** Fill the width of the container. */
   block?: boolean;

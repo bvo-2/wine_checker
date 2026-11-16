@@ -22,6 +22,26 @@ export function trackConsole(page: Page): string[] {
   return messages;
 }
 
+/**
+ * Goes to a product tab the way a person would: the tabs in the top bar, or,
+ * below 744px where the tabs move into the menu sheet, through the menu.
+ */
+export async function openTab(page: Page, name: string) {
+  if (isPhone(page)) {
+    await page.getByRole('button', { name: 'Open menu' }).click();
+    await page
+      .getByRole('dialog', { name: 'Menu' })
+      .getByRole('link', { name, exact: true })
+      .click();
+  } else {
+    const tab = page
+      .getByRole('navigation', { name: 'Sections' })
+      .getByRole('link', { name, exact: true });
+    await tab.click();
+    await expect(tab).toHaveAttribute('aria-current', 'page');
+  }
+}
+
 export function isPhone(page: Page): boolean {
   return (page.viewportSize()?.width ?? 1280) < 744;
 }

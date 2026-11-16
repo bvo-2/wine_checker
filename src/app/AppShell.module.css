@@ -44,24 +44,22 @@
   align-items: center;
   gap: var(--space-md);
   text-decoration: none;
-  font: var(--type-display-lg);
-  font-weight: 600;
-  letter-spacing: var(--tracking-display);
+  /* The name beside the logo: the display family at weight 600. */
+  font: var(--type-display-md);
+  letter-spacing: var(--tracking-display-xl);
 }
 
 .logo {
   width: var(--size-logo);
   height: var(--size-logo);
+  /* The logo is shown as a whole square tile with radius-md corners. */
+  border-radius: var(--radius-md);
   flex: none;
 }
 
-.desktopTabs {
+.tabs {
   display: flex;
   align-self: stretch;
-}
-
-.phoneTabs {
-  display: none;
 }
 
 .actions {
@@ -70,7 +68,7 @@
   gap: var(--space-md);
 }
 
-.actions .phoneOnly {
+.actions .narrowOnly {
   display: none;
 }
 
@@ -87,7 +85,7 @@
 }
 
 .footer {
-  padding: var(--space-lg);
+  padding: var(--space-xxl) var(--space-lg);
   border-top: var(--border-thin) solid var(--hairline);
   background: var(--surface-soft);
   color: var(--muted);
@@ -124,11 +122,12 @@
   min-height: var(--size-input);
   border-bottom: var(--border-thin) solid var(--hairline-soft);
   text-decoration: none;
-  font: var(--type-title-md);
+  font: var(--type-nav-link);
+  color: var(--muted);
 }
 
 .menuLink[aria-current='page'] {
-  color: var(--primary);
+  color: var(--ink);
 }
 
 .message {
@@ -142,16 +141,22 @@
   text-align: center;
 }
 
-@media (max-width: 1023px) {
-  .desktopTabs {
+/* Tablet: the five tabs need the room, so "Add a wine" becomes an icon. */
+@media (max-width: 1127px) {
+  .actions .wideOnly {
     display: none;
   }
 
-  .phoneTabs {
-    display: block;
+  .actions .narrowOnly {
+    display: inline-grid;
+  }
+
+  .tabs nav {
+    gap: var(--space-lg);
   }
 }
 
+/* Mobile: the product tabs move into the menu sheet. */
 @media (max-width: 743px) {
   .topbarInner {
     height: var(--size-topbar-compact);
@@ -159,16 +164,8 @@
     gap: var(--space-md);
   }
 
-  .phoneTabs nav {
-    padding: var(--space-none) var(--space-base);
-  }
-
-  .actions .desktopOnly {
+  .tabs {
     display: none;
-  }
-
-  .actions .phoneOnly {
-    display: inline-grid;
   }
 
   .main {

@@ -30,7 +30,9 @@
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  /* About 64% / 32%, with the rating sticky on the right. */
+  grid-template-columns: minmax(0, 64fr) minmax(0, 32fr);
+  max-width: var(--size-detail-max);
   gap: var(--space-xxl);
   align-items: start;
 }
@@ -38,9 +40,9 @@
 .aside {
   position: sticky;
   top: calc(var(--size-topbar) + var(--space-lg));
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-base);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
 }
 
 .main {
@@ -75,9 +77,18 @@
 .tastings {
   display: flex;
   flex-direction: column;
-  gap: var(--space-base);
   padding: var(--space-none);
   list-style: none;
+}
+
+/* Reviews sit straight on canvas, separated by soft hairlines. */
+.tasting {
+  padding: var(--space-lg) var(--space-none);
+  border-bottom: var(--border-thin) solid var(--hairline-soft);
+}
+
+.tasting:first-child {
+  padding-top: var(--space-sm);
 }
 
 .sectionHead {
@@ -94,7 +105,7 @@
   gap: var(--space-md);
 }
 
-@media (max-width: 899px) {
+@media (max-width: 743px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-xl);

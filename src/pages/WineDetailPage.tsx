@@ -18,6 +18,11 @@ import { NotFoundPage } from './NotFoundPage';
 import pageStyles from './Page.module.css';
 import styles from './WineDetail.module.css';
 
+/** Notes longer than about three lines get a "Show more" link. */
+export function isLongNote(note: string | undefined): boolean {
+  return !!note && (note.length > 180 || note.split('\n').length > 3);
+}
+
 function facts(wine: Wine): { label: string; value: string }[] {
   const list: [string, string | undefined][] = [
     ['Producer', wine.producer],
@@ -71,7 +76,7 @@ function WineDetail({ wine, ratings }: { wine: Wine; ratings: Rating[] }) {
           <BottleSilhouette type={wine.type} className={styles.silhouette} />
         </div>
         <div className={styles.heroText}>
-          <h1 className="t-display-xl">{wine.name}</h1>
+          <h1 className="t-display-lg">{wine.name}</h1>
           {origin && <p className="t-body-md">{origin}</p>}
           <p className="t-body-sm t-muted">{vintageLine(wine)}</p>
         </div>
@@ -91,12 +96,15 @@ function WineDetail({ wine, ratings }: { wine: Wine; ratings: Rating[] }) {
             ) : (
               <ul className={styles.tastings}>
                 {ratings.map((rating) => (
-                  <li key={rating.id}>
+                  <li key={rating.id} className={styles.tasting}>
                     <ReviewCard
-                      title={formatDate(rating.tastedOn)}
-                      stars={rating.stars}
-                      note={rating.note}
-                      meta={[rating.place, priceLine(rating)].filter((v): v is string => !!v)}
+                      author={formatDate(rating.tastedOn)}
+                      date={
+                        [rating.place, priceLine(rating)].filter(Boolean).join(' · ') || undefined
+                      }
+                      rating={rating.stars}
+                      expandable={isLongNote(rating.note)}
+                      hideAvatar
                       actions={
                         <>
                           <ButtonLink
@@ -115,7 +123,9 @@ function WineDetail({ wine, ratings }: { wine: Wine; ratings: Rating[] }) {
                           </Button>
                         </>
                       }
-                    />
+                    >
+                      {rating.note}
+                    </ReviewCard>
                   </li>
                 ))}
               </ul>
@@ -154,28 +164,22 @@ function WineDetail({ wine, ratings }: { wine: Wine; ratings: Rating[] }) {
         </div>
 
         <aside className={styles.aside} aria-label="My rating">
-          <RatingDisplay
-            value={average}
-            label={
-              ratings.length === 0
-                ? 'Not rated yet'
-                : ratings.length === 1
-                  ? 'My rating'
-                  : `Average of ${ratings.length} tastings`
-            }
-            stats={
-              latest
-                ? [
-                    {
-                      label: ratings.length === 1 ? 'Tasting' : 'Tastings',
-                      value: String(ratings.length),
-                    },
-                    { label: 'Best', value: String(Math.max(...ratings.map((r) => r.stars))) },
-                    { label: 'Last tasted', value: formatDate(latest.tastedOn, 'short') },
-                  ]
-                : []
-            }
-          />
+          {average === undefined || !latest ? (
+            <p className="t-body-md t-muted">Not rated yet</p>
+          ) : (
+            <RatingDisplay
+              value={average}
+              label={ratings.length === 1 ? 'My rating' : `Average of ${ratings.length} tastings`}
+              stats={[
+                {
+                  label: ratings.length === 1 ? 'Tasting' : 'Tastings',
+                  value: String(ratings.length),
+                },
+                { label: 'Best', value: String(Math.max(...ratings.map((r) => r.stars))) },
+                { label: 'Last tasted', value: formatDate(latest.tastedOn, 'short') },
+              ]}
+            />
+          )}
         </aside>
       </div>
 

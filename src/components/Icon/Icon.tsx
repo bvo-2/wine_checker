@@ -1,4 +1,8 @@
 export type IconName =
+  | 'heart'
+  | 'heart-filled'
+  | 'search'
+  | 'share'
   | 'star'
   | 'star-filled'
   | 'back'
@@ -14,6 +18,12 @@ export type IconName =
   | 'chevron';
 
 const PATHS: Record<IconName, string> = {
+  heart:
+    'M16 27s-11-6.6-11-14.2C5 8.5 8 6 11.3 6c2.2 0 3.8 1.2 4.7 2.8C16.9 7.2 18.5 6 20.7 6 24 6 27 8.5 27 12.8 27 20.4 16 27 16 27z',
+  'heart-filled':
+    'M16 27s-11-6.6-11-14.2C5 8.5 8 6 11.3 6c2.2 0 3.8 1.2 4.7 2.8C16.9 7.2 18.5 6 20.7 6 24 6 27 8.5 27 12.8 27 20.4 16 27 16 27z',
+  search: 'M14 6a8 8 0 100 16 8 8 0 000-16zM20 20l7 7',
+  share: 'M16 4v16M10 10l6-6 6 6M7 18v8h18v-8',
   star: 'M16 4l3.7 7.6 8.3 1.2-6 5.8 1.4 8.3L16 23l-7.4 3.9L10 18.6l-6-5.8 8.3-1.2z',
   'star-filled': 'M16 4l3.7 7.6 8.3 1.2-6 5.8 1.4 8.3L16 23l-7.4 3.9L10 18.6l-6-5.8 8.3-1.2z',
   back: 'M19 7l-9 9 9 9',
@@ -36,14 +46,19 @@ export interface IconProps {
   className?: string;
 }
 
-/** Simple 2px-stroke line glyphs drawn in currentColor. The filled star is the only solid glyph. */
+/**
+ * Simple 2px-stroke line glyphs on a 32px grid, drawn in currentColor. The filled
+ * heart and filled star are the only solid glyphs. Glyphs beyond the design
+ * system's set (plus, menu, edit, trash, download, upload, check, chevron, alert)
+ * follow the same rules.
+ */
 export function Icon({ name, size = 16, className }: IconProps) {
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 32 32"
-      fill={name === 'star-filled' ? 'currentColor' : 'none'}
+      fill={name === 'star-filled' || name === 'heart-filled' ? 'currentColor' : 'none'}
       stroke="currentColor"
       strokeWidth={2 * (32 / Math.max(size, 16))}
       strokeLinecap="round"

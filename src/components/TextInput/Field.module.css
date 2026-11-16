@@ -6,7 +6,7 @@
 }
 
 .label {
-  color: var(--body);
+  color: var(--muted);
   font: var(--type-caption);
 }
 
@@ -24,15 +24,10 @@
   background: var(--canvas);
   color: var(--ink);
   font: var(--type-body-md);
-  transition: box-shadow var(--motion);
 }
 
 .control::placeholder {
   color: var(--muted);
-}
-
-.control:hover:not(:disabled) {
-  border-color: var(--ink);
 }
 
 .control:focus-visible {

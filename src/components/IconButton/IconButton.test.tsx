@@ -12,7 +12,7 @@ describe('IconButton', () => {
     expect(button).toHaveAttribute('type', 'button');
   });
 
-  it.each(['filled', 'outline', 'ghost'] as const)('applies the %s variant', (variant) => {
+  it.each(['circle', 'outline', 'ghost'] as const)('applies the %s variant', (variant) => {
     render(<IconButton icon="close" label="Close" variant={variant} />);
     expect(screen.getByRole('button')).toHaveClass(variant);
   });
@@ -23,6 +23,13 @@ describe('IconButton', () => {
     await userEvent.click(screen.getByRole('button'));
     await userEvent.keyboard(' ');
     expect(onClick).toHaveBeenCalledTimes(2);
+  });
+
+  it('is a circle by default and supports the pressed state for toggles', () => {
+    render(<IconButton icon="heart-filled" label="Saved" aria-pressed="true" />);
+    const button = screen.getByRole('button', { name: 'Saved' });
+    expect(button).toHaveClass('circle');
+    expect(button).toHaveAttribute('aria-pressed', 'true');
   });
 
   it('does nothing when disabled', async () => {

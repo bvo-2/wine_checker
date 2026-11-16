@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useHref } from 'react-router-dom';
 import { usePageTitle } from '../app/usePageTitle';
 import { EmptyState } from '../components/EmptyState/EmptyState';
 import { ReviewCard } from '../components/ReviewCard/ReviewCard';
@@ -10,10 +10,13 @@ import cellarStyles from './Cellar.module.css';
 import styles from './GroupList.module.css';
 import { LiveStatus } from './LiveStatus';
 import pageStyles from './Page.module.css';
+import { isLongNote } from './WineDetailPage';
 
 /** Every tasting I have recorded, newest first, grouped by month. */
 export function TastingsPage() {
   usePageTitle('Tastings');
+  // The address of a wine page as the router writes it, e.g. "#/wines/:id".
+  const wineHref = useHref('/wines/:id');
   const live = useLive(async (repos) => {
     const [wines, ratings] = await Promise.all([repos.wines.list(), repos.ratings.list()]);
     return { months: groupTastingsByMonth(wines, ratings), count: ratings.length };
@@ -45,23 +48,23 @@ export function TastingsPage() {
             </h2>
             <ul className={styles.tastings}>
               {tastings.map(({ rating, wine }) => (
-                <li key={rating.id}>
+                <li key={rating.id} className={styles.tasting}>
                   <ReviewCard
-                    eyebrow={
-                      wine ? (
-                        <Link to={`/wines/${wine.id}`}>
-                          {wine.name}
-                          {wine.vintage ? ` ${wine.vintage}` : ''}
-                        </Link>
-                      ) : (
-                        'Deleted wine'
-                      )
+                    author={
+                      wine
+                        ? `${wine.name}${wine.vintage ? ` ${wine.vintage}` : ''}`
+                        : 'Deleted wine'
                     }
-                    title={formatDate(rating.tastedOn)}
-                    stars={rating.stars}
-                    note={rating.note}
-                    meta={[rating.place, priceLine(rating)].filter((v): v is string => !!v)}
-                  />
+                    authorHref={wine ? wineHref.replace(':id', wine.id) : undefined}
+                    date={[formatDate(rating.tastedOn), rating.place, priceLine(rating)]
+                      .filter(Boolean)
+                      .join(' · ')}
+                    rating={rating.stars}
+                    expandable={isLongNote(rating.note)}
+                    hideAvatar
+                  >
+                    {rating.note}
+                  </ReviewCard>
                 </li>
               ))}
             </ul>

@@ -11,7 +11,6 @@
   color: var(--ink);
   cursor: pointer;
   text-decoration: none;
-  transition: background-color var(--motion);
 }
 
 .iconButton:disabled {
@@ -19,23 +18,24 @@
   cursor: not-allowed;
 }
 
-.filled {
+/* Toggles (e.g. the saved heart) turn primary when on. */
+.iconButton[aria-pressed='true'] {
+  color: var(--primary);
+}
+
+.circle {
   background: var(--surface-strong);
 }
 
 .outline {
+  width: var(--size-icon-button-lg);
+  height: var(--size-icon-button-lg);
   background: var(--canvas);
   box-shadow: inset 0 0 0 var(--border-thin) var(--border-strong);
 }
 
 .ghost {
+  width: var(--size-icon-button-lg);
+  height: var(--size-icon-button-lg);
   background: none;
-}
-
-.iconButton:hover:not(:disabled) {
-  background: var(--surface-soft);
-}
-
-.filled:hover:not(:disabled) {
-  background: var(--hairline);
 }

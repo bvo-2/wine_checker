@@ -129,12 +129,14 @@ describe('Tastings', () => {
       within(march)
         .getAllByRole('heading', { level: 3 })
         .map((h) => h.textContent),
-    ).toEqual(['20 March 2025', '5 March 2025', '1 March 2025']);
+    ).toEqual(['Barolo 2015', 'House red', 'Barolo 2015']);
     expect(
       within(march)
         .getAllByRole('link')
-        .map((a) => a.textContent),
-    ).toEqual(['Barolo 2015', 'House red', 'Barolo 2015']);
+        .map((a) => a.getAttribute('href')),
+    ).toHaveLength(3);
+    expect(within(march).getByText('20 March 2025')).toBeInTheDocument();
+    expect(within(march).getByText('5 March 2025')).toBeInTheDocument();
     expect(within(march).getByText('Superb')).toBeInTheDocument();
   });
 

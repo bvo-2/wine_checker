@@ -1,4 +1,4 @@
-import { RatingStars } from '../Rating/Rating';
+import { Rating } from '../Rating/Rating';
 import styles from './RatingDisplay.module.css';
 
 export interface RatingDisplayStat {
@@ -7,29 +7,25 @@ export interface RatingDisplayStat {
 }
 
 export interface RatingDisplayProps {
-  /** The score, 1 to 5. Leave undefined when there is nothing to show yet. */
-  value?: number;
+  /** The score, 1 to 5. */
+  value: number;
   /** Short line under the stars, e.g. "Average of 3 tastings". */
   label?: string;
+  /** One line of context. */
   description?: string;
-  /** Up to three figures shown in a row underneath. */
+  /** Up to three figures shown in a hairline-separated row. */
   stats?: readonly RatingDisplayStat[];
 }
 
-/** The big rating number (Fraunces) with stars and supporting figures. */
+/**
+ * The one typographically loud moment: the score at 64px in the display serif,
+ * centred, with a small star row and supporting figures. Use once per page.
+ */
 export function RatingDisplay({ value, label, description, stats = [] }: RatingDisplayProps) {
   return (
     <div className={styles.display}>
-      {value === undefined ? (
-        <p className={styles.number} aria-label="Not rated yet">
-          –
-        </p>
-      ) : (
-        <>
-          <p className={styles.number}>{value.toFixed(1)}</p>
-          <RatingStars value={value} size={16} />
-        </>
-      )}
+      <p className={styles.number}>{value.toFixed(1)}</p>
+      <Rating size="sm" value={value} />
       {label && <p className={styles.label}>{label}</p>}
       {description && <p className={styles.description}>{description}</p>}
       {stats.length > 0 && (

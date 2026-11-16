@@ -25,7 +25,7 @@ test.describe('wine detail, edit, delete', () => {
 
     await page.getByRole('link', { name: 'Add another tasting' }).click();
     await expectNoSeriousA11yIssues(page);
-    await page.getByRole('radio', { name: '3 stars' }).check({ force: true });
+    await page.getByRole('button', { name: '3 stars', exact: true }).click();
     await page.getByLabel('Tasting note').fill('Past its best.');
     await page.getByRole('button', { name: 'Save tasting' }).click();
 
@@ -51,8 +51,11 @@ test.describe('wine detail, edit, delete', () => {
     await expect(page.getByText('2020 · White')).toBeVisible();
 
     await page.getByRole('link', { name: /Edit tasting of 10 June 2025/ }).click();
-    await expect(page.getByRole('radio', { name: '4 stars' })).toBeChecked();
-    await page.getByRole('radio', { name: '5 stars' }).check({ force: true });
+    await expect(page.getByRole('button', { name: '4 stars', exact: true })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    await page.getByRole('button', { name: '5 stars', exact: true }).click();
     await page.getByRole('button', { name: 'Save changes' }).click();
     await expect(page.getByRole('complementary', { name: 'My rating' })).toContainText('5.0');
   });
@@ -92,7 +95,7 @@ test.describe('wine detail, edit, delete', () => {
     await page.getByLabel('Wine name').fill('  barolo   MONFORTINO');
     await page.getByLabel('Producer').fill('giacomo conterno');
     await page.getByLabel('Vintage').fill('2015');
-    await page.getByRole('radio', { name: '2 stars' }).check({ force: true });
+    await page.getByRole('button', { name: '2 stars', exact: true }).click();
     await page.getByRole('button', { name: 'Save to my cellar' }).click();
 
     const notice = page.getByRole('group', { name: 'You already have this wine' });

@@ -28,6 +28,8 @@
   padding: var(--space-xxs) var(--space-xs);
   background: var(--primary-soft);
   color: var(--primary);
+  font: var(--type-uppercase-tag);
+  letter-spacing: var(--tracking-uppercase-tag);
   text-transform: uppercase;
 }
 

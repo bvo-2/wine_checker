@@ -18,7 +18,7 @@ test.describe('add, rate, cellar', () => {
     await page.getByLabel('Producer').fill('Giacomo Conterno');
     await page.getByLabel('Vintage').fill('2015');
     await page.getByLabel('Type').selectOption('Red');
-    await page.getByRole('radio', { name: '5 stars' }).check({ force: true });
+    await page.getByRole('button', { name: '5 stars', exact: true }).click();
     await page.getByLabel('Tasting note').fill('Roses, tar and a very long finish.');
     await page.getByRole('button', { name: 'Save to my cellar' }).click();
 
@@ -49,7 +49,7 @@ test.describe('add, rate, cellar', () => {
     await page.getByText('More details').click();
     await page.getByLabel('Alcohol').fill('99');
     await page.getByText('More details').click();
-    await page.getByRole('radio', { name: '3 stars' }).check({ force: true });
+    await page.getByRole('button', { name: '3 stars', exact: true }).click();
     await page.getByRole('button', { name: 'Save to my cellar' }).click();
     await expect(page.getByText(/Enter a year from 1800/)).toBeVisible();
     // The section holding the second message was closed; it opens by itself.
@@ -66,13 +66,17 @@ test.describe('add, rate, cellar', () => {
     await page.goto('/#/wines/new');
     await page.getByLabel('Wine name').focus();
     await page.keyboard.type('Keyboard Riesling');
-    // Tab through producer, vintage and type to the stars.
+    // Tab through producer, vintage and type to the first star, then on to the fourth.
     for (let i = 0; i < 4; i += 1) await page.keyboard.press('Tab');
-    await expect(page.getByRole('radio', { name: '1 star', exact: true })).toBeFocused();
-    await page.keyboard.press('ArrowRight');
-    await page.keyboard.press('ArrowRight');
-    await page.keyboard.press('ArrowRight');
-    await expect(page.getByRole('radio', { name: '4 stars' })).toBeChecked();
+    await expect(page.getByRole('button', { name: '1 star', exact: true })).toBeFocused();
+    for (let i = 0; i < 3; i += 1) await page.keyboard.press('Tab');
+    await page.keyboard.press('Space');
+    await expect(page.getByRole('button', { name: '4 stars', exact: true })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    // Submit from a text field with Enter.
+    await page.getByLabel('Wine name').focus();
     await page.keyboard.press('Enter');
     await expect(page.getByRole('link', { name: /Keyboard Riesling/ })).toContainText('4.0');
   });

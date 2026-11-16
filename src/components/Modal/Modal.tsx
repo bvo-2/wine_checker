@@ -86,7 +86,7 @@ export function Modal({
           <h2 id={titleId} className="t-display-sm">
             {title}
           </h2>
-          <IconButton icon="close" label="Close" onClick={onClose} />
+          <IconButton icon="close" label="Close" variant="ghost" onClick={onClose} />
         </div>
         {children}
       </div>

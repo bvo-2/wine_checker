@@ -15,7 +15,7 @@ describe('Button', () => {
     expect(onClick).toHaveBeenCalledOnce();
   });
 
-  it.each(['primary', 'secondary', 'tertiary', 'danger'] as const)(
+  it.each(['primary', 'secondary', 'tertiary', 'pill', 'danger'] as const)(
     'applies the %s variant',
     (variant) => {
       render(<Button variant={variant}>Go</Button>);

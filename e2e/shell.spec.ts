@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { expectNoSeriousA11yIssues, trackConsole } from './helpers';
+import { expectNoSeriousA11yIssues, isPhone, openTab, trackConsole } from './helpers';
 
 test.describe('app shell', () => {
   test('loads, navigates between tabs and has no console errors', async ({ page }) => {
@@ -8,13 +8,8 @@ test.describe('app shell', () => {
     await expect(page).toHaveTitle(/Decant/);
     await expect(page.getByRole('link', { name: 'Decant, home' })).toBeVisible();
 
-    const tabs = page.getByRole('navigation', { name: 'Sections' }).filter({ visible: true });
     for (const name of ['Wineries', 'Regions', 'Countries', 'Tastings', 'Wines']) {
-      await tabs.getByRole('link', { name, exact: true }).click();
-      await expect(tabs.getByRole('link', { name, exact: true })).toHaveAttribute(
-        'aria-current',
-        'page',
-      );
+      await openTab(page, name);
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     }
     expect(messages).toEqual([]);
@@ -54,6 +49,36 @@ test.describe('app shell', () => {
     await sheet.getByRole('link', { name: 'Backup and restore' }).click();
     await expect(sheet).toBeHidden();
     await expect(page).toHaveURL(/#\/backup$/);
+  });
+
+  test('the tabs are in the top bar from 744px and in the menu sheet below', async ({ page }) => {
+    await page.goto('/');
+    const tabs = page.getByRole('navigation', { name: 'Sections' });
+    if (isPhone(page)) {
+      await expect(tabs).toBeHidden();
+      await page.getByRole('button', { name: 'Open menu' }).click();
+      await expect(page.getByRole('dialog').getByRole('link')).toHaveText([
+        'Wines',
+        'Wineries',
+        'Regions',
+        'Countries',
+        'Tastings',
+        'Add a wine',
+        'Backup and restore',
+      ]);
+    } else {
+      await expect(tabs.getByRole('link')).toHaveText([
+        'Wines',
+        'Wineries',
+        'Regions',
+        'Countries',
+        'Tastings',
+      ]);
+      await expect(tabs.getByRole('link', { name: 'Wines' })).toHaveAttribute(
+        'aria-current',
+        'page',
+      );
+    }
   });
 
   test('shows a 404 page for an unknown address', async ({ page }) => {

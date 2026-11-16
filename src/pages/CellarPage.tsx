@@ -30,11 +30,11 @@ export function CellarGrid({ entries }: { entries: readonly CellarEntry[] }) {
         <li key={wine.id}>
           <WineCard
             to={`/wines/${wine.id}`}
-            name={wine.name}
+            title={wine.name}
             producer={wine.producer}
             region={wine.region}
             vintage={wine.vintage}
-            type={wine.type}
+            wine={wine.type}
             rating={latest?.stars}
             ratingLabel="Latest rating"
             badge={ratings.length > 1 ? plural(ratings.length, 'tasting') : undefined}
@@ -45,7 +45,6 @@ export function CellarGrid({ entries }: { entries: readonly CellarEntry[] }) {
   );
 }
 
-const TYPE_CATEGORIES = WINE_TYPES.map((id) => ({ id, label: WINE_TYPE_LABELS[id], dot: id }));
 const SORT_LABELS: Record<CellarSort, string> = {
   recent: 'Most recent',
   rating: 'Highest rated',
@@ -136,9 +135,8 @@ export function CellarPage() {
       <div className={styles.toolbar}>
         <CategoryStrip
           label="Filter by wine type"
-          categories={TYPE_CATEGORIES}
-          active={type}
-          onChange={(id) => setParam('type', id)}
+          active={type ?? null}
+          onChange={(id) => setParam('type', id ?? undefined)}
         />
         <div className={styles.sort}>
           <Select

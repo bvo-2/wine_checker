@@ -2,6 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
 import {
   expectNoSeriousA11yIssues,
+  openTab,
   SAMPLE_RATINGS,
   SAMPLE_WINES,
   seed,
@@ -159,13 +160,12 @@ test.describe('offline and install', () => {
 
     await page.getByRole('link', { name: 'Add your first wine' }).click();
     await page.getByLabel('Wine name').fill('Offline Riesling');
-    await page.getByRole('radio', { name: '4 stars' }).check({ force: true });
+    await page.getByRole('button', { name: '4 stars', exact: true }).click();
     await page.getByRole('button', { name: 'Save to my cellar' }).click();
     await expect(page.getByRole('link', { name: /Offline Riesling/ })).toBeVisible();
 
-    const tabs = page.getByRole('navigation', { name: 'Sections' }).filter({ visible: true });
     for (const name of ['Wineries', 'Regions', 'Countries', 'Tastings']) {
-      await tabs.getByRole('link', { name, exact: true }).click();
+      await openTab(page, name);
       await expect(page.getByRole('heading', { level: 1, name })).toBeVisible();
     }
     await page.goto('/#/backup');

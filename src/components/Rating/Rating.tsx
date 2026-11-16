@@ -3,79 +3,96 @@ import { Icon } from '../Icon/Icon';
 import styles from './Rating.module.css';
 
 export interface RatingProps {
-  /** Visible label of the group, e.g. "Your rating". */
-  label: string;
-  /** The chosen number of stars; 0 or undefined when nothing is chosen yet. */
+  /** The number of stars, 0 or undefined when there is none yet. */
   value?: number;
-  onChange: (stars: number) => void;
-  /** Number of stars. */
+  /** Number of stars in the scale. */
   max?: number;
-  /** Name of the underlying radio inputs. */
-  name?: string;
-  required?: boolean;
-  disabled?: boolean;
-  /** Validation message. Sets the error state. */
+  /** md: the 24px input. sm: the 12px read-only row for cards and reviews. */
+  size?: 'md' | 'sm';
+  /** Display only. Rounds to the nearest whole star. */
+  readOnly?: boolean;
+  /** Prints the number, with one decimal, beside the stars. */
+  showValue?: boolean;
+  /** Spoken label of the input, e.g. "Your rating". */
+  label?: string;
+  /** Receives 1 to max. */
+  onChange?: (value: number) => void;
+  /** App extension: validation message; sets the error state. */
   error?: string;
+  /** App extension: marks the input as required for assistive technology. */
+  required?: boolean;
+  /** App extension. */
+  disabled?: boolean;
 }
 
 /**
- * Star rating input. It is a radio group, so it works with arrow keys and screen
- * readers. Stars are ink-coloured, never gold.
+ * The star scale: the input used to rate a wine, and the compact read-only row.
+ * Stars are always star-rating (ink), never gold.
  */
 export function Rating({
-  label,
   value = 0,
-  onChange,
   max = 5,
-  name,
+  size = 'md',
+  readOnly = false,
+  showValue = false,
+  label,
+  onChange,
+  error,
   required = false,
   disabled = false,
-  error,
 }: RatingProps) {
   const id = useId();
   const [preview, setPreview] = useState(0);
-  const shown = preview || value;
-  const radioName = name ?? `rating-${id}`;
 
+  if (readOnly || size === 'sm') {
+    const whole = Math.round(value);
+    return (
+      <span
+        className={styles.readonly}
+        role="img"
+        aria-label={`${label ? `${label}: ` : ''}${value.toFixed(1)} out of ${max} stars`}
+      >
+        {Array.from({ length: max }, (_, index) => (
+          <Icon
+            key={index}
+            name={index < whole ? 'star-filled' : 'star'}
+            size={size === 'sm' ? 12 : 24}
+          />
+        ))}
+        {showValue && <span className={styles.value}>{value.toFixed(1)}</span>}
+      </span>
+    );
+  }
+
+  const shown = preview || value;
   return (
     <div className={styles.rating}>
-      <span id={`${id}-label`} className={styles.label}>
-        {label}
-      </span>
       <div
-        role="radiogroup"
-        aria-labelledby={`${id}-label`}
+        role="group"
+        aria-label={`${label ?? 'Rating'}${required ? ', required' : ''}`}
         aria-describedby={error ? `${id}-error` : undefined}
-        aria-invalid={error ? true : undefined}
-        aria-required={required || undefined}
         className={styles.stars}
+        data-invalid={error ? 'true' : undefined}
         onMouseLeave={() => setPreview(0)}
       >
         {Array.from({ length: max }, (_, index) => {
           const stars = index + 1;
           return (
-            <label
+            <button
               key={stars}
+              type="button"
               className={styles.star}
-              onMouseEnter={() => !disabled && setPreview(stars)}
+              aria-label={`${stars} ${stars === 1 ? 'star' : 'stars'}`}
+              aria-pressed={value === stars}
+              disabled={disabled}
+              onMouseEnter={() => setPreview(stars)}
+              onClick={() => onChange?.(stars)}
             >
-              <input
-                type="radio"
-                className="sr-only"
-                name={radioName}
-                value={stars}
-                checked={value === stars}
-                disabled={disabled}
-                onChange={() => onChange(stars)}
-                aria-label={`${stars} ${stars === 1 ? 'star' : 'stars'}`}
-              />
-              <Icon name={stars <= shown ? 'star-filled' : 'star'} size={28} />
-            </label>
+              <Icon name={stars <= shown ? 'star-filled' : 'star'} size={24} />
+            </button>
           );
         })}
-        <span className={styles.value} aria-hidden="true">
-          {value > 0 ? `${value} of ${max}` : ''}
-        </span>
+        {showValue && value > 0 && <span className={styles.value}>{value.toFixed(1)}</span>}
       </div>
       {error && (
         <p id={`${id}-error`} className={styles.error}>
@@ -84,32 +101,5 @@ export function Rating({
         </p>
       )}
     </div>
-  );
-}
-
-export interface RatingStarsProps {
-  /** 0 to max; shown rounded to the nearest whole star. */
-  value: number;
-  max?: number;
-  /** Star size in CSS pixels. */
-  size?: number;
-  /** Also print the number, with one decimal. */
-  showValue?: boolean;
-}
-
-/** Read-only row of stars. */
-export function RatingStars({ value, max = 5, size = 14, showValue = false }: RatingStarsProps) {
-  const whole = Math.round(value);
-  return (
-    <span
-      className={styles.readonly}
-      role="img"
-      aria-label={`${value.toFixed(1)} out of ${max} stars`}
-    >
-      {Array.from({ length: max }, (_, index) => (
-        <Icon key={index} name={index < whole ? 'star-filled' : 'star'} size={size} />
-      ))}
-      {showValue && <span className={styles.readonlyValue}>{value.toFixed(1)}</span>}
-    </span>
   );
 }

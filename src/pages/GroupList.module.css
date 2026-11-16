@@ -15,7 +15,6 @@
   padding: var(--space-md) var(--space-sm);
   border-bottom: var(--border-thin) solid var(--hairline);
   text-decoration: none;
-  transition: background-color var(--motion);
 }
 
 .row:hover {
@@ -66,9 +65,11 @@
 }
 
 .tastings {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-base);
   padding: var(--space-none);
   list-style: none;
+}
+
+.tasting {
+  padding: var(--space-base) var(--space-none);
+  border-bottom: var(--border-thin) solid var(--hairline-soft);
 }
