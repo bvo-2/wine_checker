@@ -1,0 +1,32 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-card-min), 1fr));
+  gap: var(--space-lg) var(--space-base);
+  padding: var(--space-none);
+  list-style: none;
+}
+
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-base);
+  margin-bottom: var(--space-lg);
+}
+
+.sort {
+  flex: none;
+  min-width: var(--size-spec-min);
+}
+
+.count {
+  color: var(--muted);
+  font: var(--type-body-sm);
+}
+
+@media (max-width: 743px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,21 +1,13 @@
 import { describe, expect, it, onTestFinished, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { App } from './App';
+import { renderApp } from '../test/render';
 import { ErrorBoundary } from './ErrorBoundary';
 
-function renderApp(path = '/') {
-  return render(
-    <MemoryRouter initialEntries={[path]}>
-      <App />
-    </MemoryRouter>,
-  );
-}
-
 describe('App shell', () => {
-  it('shows the brand, the five product tabs and the main landmark', () => {
+  it('shows the brand, the five product tabs and the main landmark', async () => {
     renderApp();
+    await screen.findByRole('heading', { level: 1 });
     expect(screen.getByRole('link', { name: 'Decant, home' })).toBeInTheDocument();
     const tabs = screen.getAllByRole('navigation', { name: 'Sections' })[0];
     expect(tabs).toBeDefined();

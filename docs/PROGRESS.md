@@ -13,6 +13,12 @@
 - **Tested:** component tests for every component state; a unit test that fails if a component stylesheet contains a raw colour or pixel value; E2E smoke test (tabs, menu sheet, 404, fonts loaded with no external requests, sub-path hosting) with axe.
 - **Limitations:** tokens come from the previous app's CSS until the design system document is added to the repo.
 
+## Phase 2 — Add, rate, cellar
+
+- **Built:** Dexie database `decant` (schema version 1) behind `WineRepository` and `RatingRepository` (`src/data/repositories.ts`); screens read through `useLive`, which refreshes when stored data changes. Zod validation for the wine and tasting forms and for stored records. "Add a wine" page: wine and first tasting saved together in one transaction; only name and stars are required; less-used fields sit under "More details", which opens by itself if it contains an error. "My cellar" (Wines tab): WineCard grid, most recent tasting first, latest rating on each card, empty state. Components: Rating (radio-group star input), RatingStars, WineCard with bottle silhouette in the wine type's colour.
+- **Tested:** unit tests for validation (boundaries for vintage, ABV, price, note length, dates), repositories (create, update, cascade delete, all-or-nothing save, reopen), a schema migration harness, cellar sorting; component tests for the form and cellar; E2E add → rate → cellar → reload, validation messages, and a keyboard-only run.
+- **Limitations:** a wine can be added but not yet opened, edited or deleted (Phase 3).
+
 ## Later (ideas, not built)
 
 - Wine lookup from an external API (needs a proxy for secret keys).
