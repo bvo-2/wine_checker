@@ -35,10 +35,12 @@ export const CURRENCIES = [
 /* ---------- Stored records (also used to validate imported backups) ---------- */
 
 const timestamp = z.string().refine((v) => !Number.isNaN(Date.parse(v)), 'Invalid timestamp');
+/** Ids end up in addresses (#/wines/<id>), so only plain characters are accepted. */
+const recordId = z.string().regex(/^[A-Za-z0-9_-]{1,100}$/, 'Invalid id');
 const shortText = z.string().trim().min(1).max(LIMITS.text);
 
 export const wineSchema = z.object({
-  id: z.string().min(1).max(100),
+  id: recordId,
   name: z.string().trim().min(1).max(LIMITS.name),
   producer: shortText.optional(),
   vintage: z
@@ -57,8 +59,8 @@ export const wineSchema = z.object({
 });
 
 export const ratingSchema = z.object({
-  id: z.string().min(1).max(100),
-  wineId: z.string().min(1).max(100),
+  id: recordId,
+  wineId: recordId,
   stars: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
   note: z.string().min(1).max(LIMITS.note).optional(),
   pricePaid: z.number().min(0).max(LIMITS.priceMax).optional(),

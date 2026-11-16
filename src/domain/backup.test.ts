@@ -104,6 +104,14 @@ describe('buildBackup and parseBackup', () => {
     expect(!result.ok && result.message).toMatch(/damaged/);
   });
 
+  it.each(['../evil', 'a/b', 'a\\b', 'a b', '', 'x'.repeat(101)])(
+    'rejects the unsafe id %j',
+    (id) => {
+      const result = parseBackup(text(buildBackup([wine(id)], [])));
+      expect(!result.ok && result.message).toMatch(/damaged/);
+    },
+  );
+
   it('rejects duplicate ids', () => {
     const result = parseBackup(text(buildBackup([wine('w1'), wine('w1')], [])));
     expect(!result.ok && result.message).toMatch(/"w1" appears twice/);

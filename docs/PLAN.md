@@ -40,7 +40,9 @@ Dependencies beyond the brief's list, each needed by a stated requirement:
 - `@fontsource-variable/fraunces`, `@fontsource/crimson-text` — the font files, bundled so the app works offline.
 - ESLint plugins, Prettier, `jsdom`, `@testing-library/*` — tooling for the listed lint and test stack.
 
-The service worker is hand-written (about 50 lines, generated at build time by a small Vite plugin in `vite.config.ts`), so no PWA library is added.
+The service worker is hand-written (`src/sw.template.js`, about 50 lines, filled in at build time by a small Vite plugin in `vite.config.ts`), so no PWA library is added.
+
+`playwright-core` is pinned through `overrides` in `package.json` so the test runner and the axe integration use the same version.
 
 ## 3. Data model
 

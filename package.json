@@ -1,6 +1,6 @@
 {
   "name": "decant",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "Decant: a personal wine rating app. Static, offline-first, data stored in the browser.",
