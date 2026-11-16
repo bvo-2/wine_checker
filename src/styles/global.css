@@ -1,0 +1,127 @@
+/* Self-hosted fonts (bundled by Vite, so the app works offline). */
+@import '@fontsource-variable/fraunces/wght.css';
+@import '@fontsource/crimson-text/latin-400.css';
+@import '@fontsource/crimson-text/latin-ext-400.css';
+@import '@fontsource/crimson-text/latin-400-italic.css';
+@import '@fontsource/crimson-text/latin-600.css';
+@import '@fontsource/crimson-text/latin-ext-600.css';
+@import '@fontsource/crimson-text/latin-700.css';
+@import '@fontsource/crimson-text/latin-ext-700.css';
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  margin: var(--space-none);
+  background: var(--canvas);
+  color: var(--ink);
+  font: var(--type-body-md);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+ul,
+ol {
+  margin: var(--space-none);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: var(--border-thick) solid var(--focus-ring);
+  outline-offset: var(--space-xxs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Type styles ---------- */
+.t-display-xl {
+  font: var(--type-display-xl);
+  letter-spacing: var(--tracking-display);
+}
+.t-display-lg {
+  font: var(--type-display-lg);
+  letter-spacing: var(--tracking-display);
+}
+.t-display-md {
+  font: var(--type-display-md);
+}
+.t-display-sm {
+  font: var(--type-display-sm);
+}
+.t-title-md {
+  font: var(--type-title-md);
+}
+.t-body-md {
+  font: var(--type-body-md);
+  color: var(--body);
+}
+.t-body-sm {
+  font: var(--type-body-sm);
+}
+.t-caption {
+  font: var(--type-caption);
+}
+.t-caption-sm {
+  font: var(--type-caption-sm);
+}
+.t-micro-label {
+  font: var(--type-micro-label);
+}
+.t-muted {
+  color: var(--muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: var(--border-thin);
+  height: var(--border-thin);
+  padding: var(--space-none);
+  margin: calc(-1 * var(--border-thin));
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: var(--space-none);
+}

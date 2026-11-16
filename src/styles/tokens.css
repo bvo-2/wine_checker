@@ -1,0 +1,126 @@
+/*
+ * Decant design tokens — Version 1 · Palette: Bordeaux.
+ * Generated from the token tables in docs/design/Decant-design-system.md.
+ * Components must only use var(--token) values; a unit test enforces this.
+ */
+:root {
+  /* Colour */
+  --primary: #8b1d3b;
+  --primary-active: #6e132c;
+  --primary-disabled: #e8cdd4;
+  --primary-soft: #f6e7eb;
+  --on-primary: #ffffff;
+  --accent: #8a5f1c;
+  --logo-claret: #7b153c;
+  --logo-cream: #fcead0;
+  --ink: #231a1c;
+  --body: #3d3335;
+  --muted: #6b6062;
+  --muted-soft: #9a8f8c;
+  --hairline: #e2dad6;
+  --hairline-soft: #eee8e5;
+  --border-strong: #8f8482;
+  --canvas: #ffffff;
+  --surface-soft: #f8f4f1;
+  --surface-card: #ffffff;
+  --surface-strong: #f1ebe7;
+  --star-rating: var(--ink);
+  --focus-ring: var(--ink);
+  --error: #b3261e;
+  --error-hover: #921c15;
+  --on-error: #ffffff;
+  --scrim: #00000080;
+  --wine-red: #7b1e34;
+  --wine-white: #e3cf73;
+  --wine-rose: #ef9aa0;
+  --wine-orange: #d0843a;
+  --wine-sparkling: #cfc49c;
+  --wine-dessert: #a8661a;
+
+  /* Type families */
+  --font-display: 'Fraunces Variable', Fraunces, 'Iowan Old Style', Georgia, serif;
+  --font-text: 'Crimson Text', Georgia, 'Times New Roman', serif;
+
+  /* Type styles, as `font` shorthands: weight size/line-height family.
+     Crimson Text only ships 400 / 600 / 700, so text styles never use 500. */
+  --type-rating-display: 600 64px/1.1 var(--font-display);
+  --type-display-xl: 600 28px/1.29 var(--font-display);
+  --type-display-lg: 500 22px/1.18 var(--font-display);
+  --type-display-md: 600 21px/1.33 var(--font-display);
+  --type-display-sm: 500 20px/1.2 var(--font-display);
+  --type-title-md: 600 16px/1.25 var(--font-text);
+  --type-body-md: 400 16px/1.5 var(--font-text);
+  --type-body-sm: 400 14px/1.43 var(--font-text);
+  --type-caption: 600 14px/1.29 var(--font-text);
+  --type-caption-sm: 400 13px/1.23 var(--font-text);
+  --type-micro-label: 700 12px/1.33 var(--font-text);
+  --type-badge: 600 11px/1.18 var(--font-text);
+  --tracking-display: -0.2px;
+  --tracking-rating-display: -1px;
+
+  /* Spacing */
+  --space-none: 0px;
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-base: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --space-section: 64px;
+
+  /* Radius */
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Borders */
+  --border-thin: 1px;
+  --border-thick: 2px;
+
+  /* Sizes */
+  --size-page-max: 1280px;
+  --size-detail-max: 1080px;
+  --size-form-max: 640px;
+  --size-topbar: 80px;
+  --size-topbar-compact: 64px;
+  --size-tabs-compact: 48px;
+  --size-logo: 48px;
+  --size-button: 48px;
+  --size-button-sm: 40px;
+  --size-input: 56px;
+  --size-textarea-min: 112px;
+  --size-icon-button: 44px;
+  --size-icon-button-sm: 32px;
+  --size-chip: 40px;
+  --size-dot: 10px;
+  --size-star-touch: 44px;
+  --size-sheet-max: 420px;
+  --size-dialog-max: 440px;
+  --size-card-min: 220px;
+  --size-plate-max: 240px;
+  --size-spec-min: 160px;
+
+  /* Elevation */
+  --shadow-float:
+    rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0;
+
+  /* Motion */
+  --motion: 180ms ease;
+
+  /* Layers */
+  --layer-topbar: 10;
+  --layer-overlay: 100;
+}
+
+@media (max-width: 743px) {
+  :root {
+    --type-rating-display: 600 56px/1.1 var(--font-display);
+    --type-display-xl: 600 24px/1.29 var(--font-display);
+  }
+}
