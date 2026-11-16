@@ -1,0 +1,52 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  border: var(--border-thin) solid var(--hairline);
+  background: var(--surface-card);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-base);
+}
+
+.heading {
+  min-width: 0;
+}
+
+.eyebrow {
+  font: var(--type-caption);
+}
+
+.title {
+  font: var(--type-title-md);
+}
+
+.meta {
+  color: var(--muted);
+  font: var(--type-body-sm);
+}
+
+.note {
+  color: var(--body);
+  font: var(--type-body-md);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.noNote {
+  color: var(--muted);
+  font: var(--type-body-sm);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-base);
+}

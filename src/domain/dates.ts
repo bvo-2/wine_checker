@@ -15,12 +15,12 @@ export function isIsoDate(value: string): boolean {
   return date.getUTCFullYear() === y && date.getUTCMonth() === m - 1 && date.getUTCDate() === d;
 }
 
-/** "14 March 2025" from "2025-03-14". Time zone independent. */
-export function formatDate(iso: string): string {
+/** "14 March 2025" (or "14 Mar 2025" when short) from "2025-03-14". Time zone independent. */
+export function formatDate(iso: string, month: 'long' | 'short' = 'long'): string {
   if (!isIsoDate(iso)) return iso;
   return new Intl.DateTimeFormat('en-GB', {
     day: 'numeric',
-    month: 'long',
+    month,
     year: 'numeric',
     timeZone: 'UTC',
   }).format(new Date(`${iso}T00:00:00Z`));

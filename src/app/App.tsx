@@ -3,7 +3,10 @@ import { AppShell } from './AppShell';
 import { AddWinePage } from '../pages/AddWinePage';
 import { CellarPage } from '../pages/CellarPage';
 import { ComingSoonPage } from '../pages/ComingSoonPage';
+import { EditWinePage } from '../pages/EditWinePage';
 import { NotFoundPage } from '../pages/NotFoundPage';
+import { TastingFormPage } from '../pages/TastingFormPage';
+import { WineDetailPage } from '../pages/WineDetailPage';
 
 export function App() {
   return (
@@ -11,7 +14,10 @@ export function App() {
       <Route element={<AppShell />}>
         <Route index element={<CellarPage />} />
         <Route path="wines/new" element={<AddWinePage />} />
-        <Route path="wines/:wineId" element={<ComingSoonPage title="Wine details" />} />
+        <Route path="wines/:wineId" element={<WineDetailPage />} />
+        <Route path="wines/:wineId/edit" element={<EditWinePage />} />
+        <Route path="wines/:wineId/tastings/new" element={<TastingFormPage />} />
+        <Route path="wines/:wineId/tastings/:ratingId/edit" element={<TastingFormPage />} />
         <Route path="wineries" element={<ComingSoonPage title="Wineries" />} />
         <Route path="regions" element={<ComingSoonPage title="Regions" />} />
         <Route path="countries" element={<ComingSoonPage title="Countries" />} />

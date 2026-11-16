@@ -20,6 +20,7 @@ describe('dates', () => {
 
   it('formats dates and months for display', () => {
     expect(formatDate('2025-03-14')).toBe('14 March 2025');
+    expect(formatDate('2025-03-14', 'short')).toBe('14 Mar 2025');
     expect(formatMonth('2025-03-14')).toBe('March 2025');
     expect(formatMonth('2024-12')).toBe('December 2024');
     expect(formatDate('garbage')).toBe('garbage');

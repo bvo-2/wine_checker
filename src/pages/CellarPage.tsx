@@ -1,8 +1,20 @@
+import { useSearchParams } from 'react-router-dom';
 import { usePageTitle } from '../app/usePageTitle';
+import { Button } from '../components/Button/Button';
+import { CategoryStrip } from '../components/CategoryStrip/CategoryStrip';
+import { Select } from '../components/TextInput/TextInput';
 import { EmptyState } from '../components/EmptyState/EmptyState';
 import { WineCard } from '../components/WineCard/WineCard';
 import { useLive } from '../data/RepositoriesContext';
-import { buildCellar, sortCellar, type CellarEntry } from '../domain/cellar';
+import {
+  buildCellar,
+  CELLAR_SORTS,
+  filterCellar,
+  sortCellar,
+  type CellarEntry,
+  type CellarSort,
+} from '../domain/cellar';
+import { WINE_TYPES, WINE_TYPE_LABELS } from '../domain/types';
 import { plural } from '../domain/format';
 import styles from './Cellar.module.css';
 import { LiveStatus } from './LiveStatus';
@@ -30,9 +42,26 @@ export function CellarGrid({ entries }: { entries: readonly CellarEntry[] }) {
   );
 }
 
-/** The Wines tab: every wine I have tasted, most recent first. */
+const TYPE_CATEGORIES = WINE_TYPES.map((id) => ({ id, label: WINE_TYPE_LABELS[id], dot: id }));
+const SORT_LABELS: Record<CellarSort, string> = {
+  recent: 'Most recent',
+  rating: 'Highest rated',
+  name: 'Name (A to Z)',
+};
+
+function isOneOf<T extends string>(list: readonly T[], value: string | null): value is T {
+  return value !== null && (list as readonly string[]).includes(value);
+}
+
+/** The Wines tab: every wine I have tasted. Sort and filter live in the URL. */
 export function CellarPage() {
   usePageTitle('My cellar');
+  const [params, setParams] = useSearchParams();
+  const typeParam = params.get('type');
+  const sortParam = params.get('sort');
+  const type = isOneOf(WINE_TYPES, typeParam) ? typeParam : undefined;
+  const sort = isOneOf(CELLAR_SORTS, sortParam) ? sortParam : 'recent';
+
   const live = useLive(
     async (repos) =>
       buildCellar(...(await Promise.all([repos.wines.list(), repos.ratings.list()]))),
@@ -51,14 +80,59 @@ export function CellarPage() {
     );
   }
 
-  const entries = sortCellar(live.data, 'recent');
+  function setParam(key: string, value: string | undefined) {
+    const next = new URLSearchParams(params);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    setParams(next, { replace: true });
+  }
+
+  const entries = sortCellar(filterCellar(live.data, { type }), sort);
   return (
     <>
       <div className={pageStyles.head}>
         <h1 className="t-display-xl">My cellar</h1>
-        <p className={styles.count}>{plural(entries.length, 'wine')}</p>
+        <p className={styles.count} role="status">
+          {type
+            ? `${entries.length} of ${plural(live.data.length, 'wine')}`
+            : plural(entries.length, 'wine')}
+        </p>
       </div>
-      <CellarGrid entries={entries} />
+      <div className={styles.toolbar}>
+        <CategoryStrip
+          label="Filter by wine type"
+          categories={TYPE_CATEGORIES}
+          active={type}
+          onChange={(id) => setParam('type', id)}
+        />
+        <div className={styles.sort}>
+          <Select
+            label="Sort by"
+            value={sort}
+            onChange={(event) =>
+              setParam('sort', event.target.value === 'recent' ? undefined : event.target.value)
+            }
+          >
+            {CELLAR_SORTS.map((id) => (
+              <option key={id} value={id}>
+                {SORT_LABELS[id]}
+              </option>
+            ))}
+          </Select>
+        </div>
+      </div>
+      {entries.length === 0 && type ? (
+        <EmptyState
+          title={`No ${WINE_TYPE_LABELS[type].toLowerCase()} wines yet`}
+          text="Nothing in your cellar matches this filter."
+        >
+          <Button variant="secondary" onClick={() => setParam('type', undefined)}>
+            Show all wines
+          </Button>
+        </EmptyState>
+      ) : (
+        <CellarGrid entries={entries} />
+      )}
     </>
   );
 }

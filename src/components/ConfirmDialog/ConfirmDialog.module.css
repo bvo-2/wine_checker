@@ -1,0 +1,11 @@
+.body {
+  color: var(--body);
+  font: var(--type-body-md);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-md);
+}

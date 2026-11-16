@@ -19,6 +19,12 @@
 - **Tested:** unit tests for validation (boundaries for vintage, ABV, price, note length, dates), repositories (create, update, cascade delete, all-or-nothing save, reopen), a schema migration harness, cellar sorting; component tests for the form and cellar; E2E add → rate → cellar → reload, validation messages, and a keyboard-only run.
 - **Limitations:** a wine can be added but not yet opened, edited or deleted (Phase 3).
 
+## Phase 3 — Wine detail, edit, delete
+
+- **Built:** wine detail page (RatingDisplay with the average of my tastings, facts, tastings as ReviewCards newest first); add another tasting; edit a wine; edit or delete a tasting; delete a wine with its tastings. Every delete asks first (ConfirmDialog, an alert dialog where Cancel is the first button). Duplicate suggestion on "Add a wine": same name + producer + vintage, ignoring case and extra spaces, offers "Add tasting to existing wine" or "Save as a new wine"; nothing is merged automatically. Cellar sorting (recent, rating, name) and wine-type filter (CategoryStrip), both kept in the URL.
+- **Tested:** unit tests for average-rating maths and duplicate matching; component tests for RatingDisplay, ReviewCard, CategoryStrip, ConfirmDialog and each page flow; E2E for add tasting → average updates, edit, delete with confirmation, duplicate suggestion, sort and filter.
+- **Limitations:** deleting is permanent (no undo); the backup in Phase 5 is the safety net.
+
 ## Later (ideas, not built)
 
 - Wine lookup from an external API (needs a proxy for secret keys).
