@@ -78,6 +78,6 @@ test.describe('app shell', () => {
     await page.goto('http://localhost:4174/some/sub/path/');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await page.goto('http://localhost:4174/some/sub/path/#/wineries');
-    await expect(page.getByRole('heading', { level: 1, name: 'Wineries' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'No wineries yet' })).toBeVisible();
   });
 });

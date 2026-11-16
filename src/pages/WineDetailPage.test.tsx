@@ -85,7 +85,10 @@ describe('Wine detail', () => {
     await userEvent.type(note, 'Even better on day two');
     await userEvent.click(screen.getByRole('radio', { name: '4 stars' }));
     await userEvent.click(screen.getByRole('button', { name: 'Save changes' }));
-    expect(await screen.findByText('Even better on day two')).toBeInTheDocument();
+    // selector: the note on the detail page, not the textarea still on screen while saving.
+    expect(
+      await screen.findByText('Even better on day two', { selector: 'p' }),
+    ).toBeInTheDocument();
     expect(screen.getByText('4.0', { selector: 'p' })).toBeInTheDocument();
     expect(await repos.ratings.list()).toHaveLength(2);
   });

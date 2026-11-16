@@ -1,0 +1,74 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-none);
+  list-style: none;
+  border-top: var(--border-thin) solid var(--hairline);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-base);
+  min-height: var(--size-input);
+  padding: var(--space-md) var(--space-sm);
+  border-bottom: var(--border-thin) solid var(--hairline);
+  text-decoration: none;
+  transition: background-color var(--motion);
+}
+
+.row:hover {
+  background: var(--surface-soft);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.name {
+  font: var(--type-title-md);
+}
+
+.counts {
+  color: var(--muted);
+  font: var(--type-body-sm);
+}
+
+.score {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  gap: var(--space-xs);
+  color: var(--star-rating);
+  font: var(--type-caption);
+}
+
+.unrated {
+  color: var(--muted);
+  font: var(--type-body-sm);
+}
+
+.month {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-base);
+}
+
+.months {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  max-width: var(--size-detail-max);
+}
+
+.tastings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-base);
+  padding: var(--space-none);
+  list-style: none;
+}

@@ -1,3 +1,4 @@
+import { groupKey, type GroupField } from './grouping';
 import type { Rating, Wine, WineType } from './types';
 
 /** A wine together with my tastings of it. */
@@ -66,8 +67,15 @@ export function sortCellar(entries: readonly CellarEntry[], sort: CellarSort): C
 
 export interface CellarFilter {
   type?: WineType;
+  /** Only the wines of one winery, region or country (see grouping.ts). */
+  group?: { field: GroupField; key: string };
 }
 
 export function filterCellar(entries: readonly CellarEntry[], filter: CellarFilter): CellarEntry[] {
-  return entries.filter((entry) => !filter.type || entry.wine.type === filter.type);
+  const { type, group } = filter;
+  return entries.filter(
+    (entry) =>
+      (!type || entry.wine.type === type) &&
+      (!group || groupKey(entry.wine, group.field) === group.key),
+  );
 }

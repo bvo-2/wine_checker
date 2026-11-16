@@ -25,6 +25,12 @@
 - **Tested:** unit tests for average-rating maths and duplicate matching; component tests for RatingDisplay, ReviewCard, CategoryStrip, ConfirmDialog and each page flow; E2E for add tasting → average updates, edit, delete with confirmation, duplicate suggestion, sort and filter.
 - **Limitations:** deleting is permanent (no undo); the backup in Phase 5 is the safety net.
 
+## Phase 4 — Browse by Wineries, Regions, Countries, Tastings
+
+- **Built:** Wineries, Regions and Countries tabs: lists grouped from my own wines with wine count, tasting count and my average rating (the mean of every tasting in the group), sorted by name or rating. Spellings that differ only in case or spacing share a group; wines missing the field are under "Unknown", always last. Each group opens the cellar filtered to it, with a link back. Tastings tab: every tasting newest first under month headings, each linking to its wine. Empty states for all four tabs.
+- **Tested:** unit tests for grouping (missing values, merged spellings, order-independent labels, tasting-weighted average, month grouping); component tests for each tab; E2E navigating every tab with seeded data, plus empty states.
+- **Found while testing:** the label of a merged group depended on the order the browser returned the wines in. Fixed: the most used spelling wins, then the one with more capitals.
+
 ## Later (ideas, not built)
 
 - Wine lookup from an external API (needs a proxy for secret keys).

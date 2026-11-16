@@ -1,7 +1,8 @@
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { usePageTitle } from '../app/usePageTitle';
 import { Button } from '../components/Button/Button';
 import { CategoryStrip } from '../components/CategoryStrip/CategoryStrip';
+import { Icon } from '../components/Icon/Icon';
 import { Select } from '../components/TextInput/TextInput';
 import { EmptyState } from '../components/EmptyState/EmptyState';
 import { WineCard } from '../components/WineCard/WineCard';
@@ -14,7 +15,9 @@ import {
   type CellarEntry,
   type CellarSort,
 } from '../domain/cellar';
+import { GROUP_FIELDS, groupCellar, UNKNOWN_KEY } from '../domain/grouping';
 import { WINE_TYPES, WINE_TYPE_LABELS } from '../domain/types';
+import { GROUP_PAGES } from './groups';
 import { plural } from '../domain/format';
 import styles from './Cellar.module.css';
 import { LiveStatus } from './LiveStatus';
@@ -55,12 +58,16 @@ function isOneOf<T extends string>(list: readonly T[], value: string | null): va
 
 /** The Wines tab: every wine I have tasted. Sort and filter live in the URL. */
 export function CellarPage() {
-  usePageTitle('My cellar');
   const [params, setParams] = useSearchParams();
   const typeParam = params.get('type');
   const sortParam = params.get('sort');
   const type = isOneOf(WINE_TYPES, typeParam) ? typeParam : undefined;
   const sort = isOneOf(CELLAR_SORTS, sortParam) ? sortParam : 'recent';
+  // Set when arriving from the Wineries, Regions or Countries tab.
+  const groupField = GROUP_FIELDS.find((field) => params.has(field));
+  const group = groupField ? { field: groupField, key: params.get(groupField) ?? '' } : undefined;
+
+  usePageTitle(group ? GROUP_PAGES[group.field].title : 'My cellar');
 
   const live = useLive(
     async (repos) =>
@@ -87,14 +94,42 @@ export function CellarPage() {
     setParams(next, { replace: true });
   }
 
-  const entries = sortCellar(filterCellar(live.data, { type }), sort);
+  const inGroup = filterCellar(live.data, { group });
+  const entries = sortCellar(filterCellar(inGroup, { type }), sort);
+  const groupPage = group && GROUP_PAGES[group.field];
+  const groupLabel =
+    group && groupCellar(inGroup, group.field).find((g) => g.key === group.key)?.label;
+
+  if (group && groupPage && inGroup.length === 0) {
+    return (
+      <EmptyState
+        level={1}
+        title={`No wines for this ${groupPage.one}`}
+        text="It may have been renamed, or its wines deleted."
+        action={{ label: `Back to ${groupPage.title.toLowerCase()}`, to: groupPage.path }}
+      />
+    );
+  }
+
   return (
     <>
+      {groupPage && (
+        <Link to={groupPage.path} className={pageStyles.back}>
+          <Icon name="back" size={16} />
+          {groupPage.title}
+        </Link>
+      )}
       <div className={pageStyles.head}>
-        <h1 className="t-display-xl">My cellar</h1>
+        <h1 className="t-display-xl">
+          {group
+            ? group.key === UNKNOWN_KEY
+              ? `Unknown ${groupPage?.one}`
+              : groupLabel
+            : 'My cellar'}
+        </h1>
         <p className={styles.count} role="status">
           {type
-            ? `${entries.length} of ${plural(live.data.length, 'wine')}`
+            ? `${entries.length} of ${plural(inGroup.length, 'wine')}`
             : plural(entries.length, 'wine')}
         </p>
       </div>
